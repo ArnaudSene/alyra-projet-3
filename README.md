@@ -23,7 +23,7 @@ npm install
 ### Prérequis
 
 Export les variables d'environnements
-```
+```shell
 export NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=<projectId>
 ```
 
