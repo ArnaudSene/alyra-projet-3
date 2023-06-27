@@ -12,7 +12,6 @@ import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
  * Voters are able to add proposals, vote for proposals
  *
  * This contract is only for exercise
- * @inheritdoc Ownable
  */
 contract Voting is Ownable {
 
