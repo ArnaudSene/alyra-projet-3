@@ -34,14 +34,11 @@ npm install
 
 ### Prérequis
 
-Export les variables d'environnements
-```shell
-export NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=<projectId>
-```
+Renommé les fichiers `.env.exemple` en `.env` dans les dossiers `fonrtend` et `backend`. Puis renseigné vos variables d'environnement local.
 
-Activer le réseau de test `hardhat`
+Par default le réseau de test `hardhat` est activer. Pour le désactiver, modifier cet valeur dans `frontend/.env`:
 ```shell
-export NEXT_PUBLIC_ENABLE_TESTNETS=true
+NEXT_PUBLIC_ENABLE_TESTNETS=false
 ```
 
 ### Démarrer le serveur

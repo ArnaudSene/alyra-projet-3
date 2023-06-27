@@ -1,9 +1,3 @@
-// export const wallet_connect_project_id = "502b4b7bc660a7df4ffcb6dea5903f7a"
-// export const wallet_connect_project_id = process.env.WALLET_CONNECT_PROJECT_ID
-// export const contractAddress = "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
-// export const contractAddress = "0x2B1f6f3Ffd3B7B2fc698eBDbdE4405E269099F57"
-// export const WALLET_CONNECT_PROJECT_ID = `${process.env.WALLET_CONNECT_PROJECT_ID}`
-
 export const contractAddress = `${process.env.CONTRACT_ADDRESS}`
 export const abi = [
     {
