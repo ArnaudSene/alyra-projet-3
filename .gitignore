@@ -1,5 +1,7 @@
 .idea
 .env
+.env.development
+.env.production
 coverage
 coverage.json
 typechain
