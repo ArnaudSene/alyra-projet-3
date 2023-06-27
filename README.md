@@ -34,7 +34,7 @@ npm install
 
 ### Prérequis
 
-Renommer les fichiers `.env.exemple` en `.env` dans les dossiers `fonrtend` et `backend`. Puis renseigner vos variables d'environnement local.
+Renommer les fichiers `.env.example` en `.env` dans les dossiers `fonrtend` et `backend`. Puis renseigner vos variables d'environnement local.
 
 Par default le réseau de test `hardhat` est activé. Pour le désactiver, modifier cet valeur dans `frontend/.env`:
 ```shell
