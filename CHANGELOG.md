@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 (2023-06-27)
+
+### feat: Add .env + projectId
+
+- Add .env.development
+- Add .env.production
+- set projectId
+
+---
+
 ## 0.2.0 (2023-06-22)
 
 ### feat: Add NatSpec for Voting

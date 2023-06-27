@@ -18,6 +18,8 @@ import {
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
+export const contractAddress = process.env.CONTRACT_ADDRESS
+
 const { chains, publicClient, webSocketPublicClient } = configureChains(
     [
         sepolia,
@@ -28,6 +30,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 
 
 const projectId: string = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || ""
+
 const { wallets } = getDefaultWallets({
     appName: 'RainbowKit demo',
     projectId: projectId,
