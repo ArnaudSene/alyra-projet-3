@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2023-06-22)
+
+### feat: Add NatSpec for Voting
+
+- Add NatSpec for Voting Smart Contract
+
+---
+
 ## 0.1.0 (2023-06-22)
 
 ### feat: Manage environment variable
