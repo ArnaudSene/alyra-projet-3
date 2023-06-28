@@ -1,11 +1,7 @@
 "use client";
 
-import Headers from "@/components/headers/headers";
-
-export default function Home() {
+export default function Voters() {
   return (
-        <>
-            <Headers />
-        </>
+        <h1>Voters</h1>
   )
 }
