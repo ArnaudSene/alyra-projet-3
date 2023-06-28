@@ -1,7 +1,12 @@
 "use client";
 
+import IsConnected from "@/components/IsConnected";
+import GetVoter from "@/components/voters/GetVoter";
+
 export default function Voters() {
   return (
-        <h1>Voters</h1>
+    <IsConnected>
+      <GetVoter />
+    </IsConnected>
   )
 }

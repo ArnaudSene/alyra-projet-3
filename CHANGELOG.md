@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0 (2023-06-28)
+
+### feat: Add Components + Voter feature
+
+- Add Event, IsConnected, GetVoter and VoterManager components
+- Add Voter interface
+- Implement @/utils for utils functions
+- Implement feat for voters
+  - getVoter
+
+---
+
 ## 0.4.0 (2023-06-28)
 
 ### feat: Add admin + owner pages
