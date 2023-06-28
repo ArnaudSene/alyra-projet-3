@@ -1,23 +1,25 @@
 "use client";
 
-import {Flex, Text} from "@chakra-ui/react";
-import {ConnectButton} from "@rainbow-me/rainbowkit";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 
 
 const Headers = () => {
     return (
 
-        <header className="bg-gray-50 container mx-auto text-center p-6">
-            <nav className="container mx-auto flex justify-between items-center">
-                <Link className="text-lg font-bold" href="/">Home</Link>
+        <header className="bg-gray-700 text-gray-100">
+            <nav className="container mx-auto flex justify-between items-center text-center p-4">
+                <Link className="text-lg font-bold hover:text-indigo-500" href="/">Home</Link>
 
                 <div>
                     <ConnectButton />
                 </div>
                 <div>
-                    <Link className="mr-4" href="/admin">Admin</Link>
-                    <Link className="mr-4" href="/voters">Voters</Link>
+                    {/* @TODO Block if admin */}
+                        <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/admin">Admin</Link>
+                    {/* @TODO Block if admin */}
+
+                    <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/voters">Voters</Link>
                 </div>
             </nav>
         </header>

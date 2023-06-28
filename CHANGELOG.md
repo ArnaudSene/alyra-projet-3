@@ -19,7 +19,7 @@
 
 - Add .env.development
 - Add .env.production
-- set projectId`
+- set projectId
 
 ---
 
