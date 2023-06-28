@@ -18,7 +18,7 @@ const ProposalManager = () => {
             writeContractByFunctionName('addProposal', proposal).then(
                 hash => setSucess(hash)
             ).catch(
-                err => setError(err.message)
+                err => setError(err)
             )
         }
     }
