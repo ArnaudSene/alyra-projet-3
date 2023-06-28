@@ -14,10 +14,7 @@ const GetVoter = () => {
         setError('')
         try {
             const data = await readContractByFunctionName('getVoter', voterAddress)
-            console.log('success', data)
             setVoter(data)
-            console.log('success', voter)
-            console.log('success', data)
         } catch (err: any) {
             setError(err.message)
         }
