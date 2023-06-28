@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0 (2023-06-29)
+
+### feat: Add ProposalManager
+
+- Voter can add a proposal
+- Event added when adding proposal
+- Minor fix on `writeContractByFunctionName` utils function return type
+
+---
+
 ## 0.5.0 (2023-06-28)
 
 ### feat: Add Components + Voter feature
@@ -8,7 +18,7 @@
 - Add Voter interface
 - Implement @/utils for utils functions
 - Implement feat for voters
-  - getVoter
+- getVoter
 
 ---
 

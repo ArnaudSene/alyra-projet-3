@@ -21,7 +21,7 @@ export const prepareWriteContractByFunctionName = async (functionName: string, .
     })
 }
 
-export const writeContractByFunctionName = async (functionName: string, ...args: any): Promise<`0x${string}`| undefined> => {
+export const writeContractByFunctionName = async (functionName: string, ...args: any): Promise<`0x${string}`> => {
     try {
         const { request } = await prepareWriteContractByFunctionName(functionName, ...args)
         const { hash } = await writeContract(request)
@@ -45,6 +45,8 @@ export const writeContractByFunctionName = async (functionName: string, ...args:
                 throw new Error(error)
             }
         }
+
+        throw new Error(err.message)
     }
 }
 
