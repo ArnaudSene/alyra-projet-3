@@ -1,12 +1,12 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+"use client";
 
-// export const {WALLET_CONNECT_PROJECT_ID} = process.env
+import Headers from "@/components/headers/headers";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Voting project 3</h1>
-        <ConnectButton />
-    </main>
+        <div >
+            <Headers />
+        </div>
   )
 }

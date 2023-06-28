@@ -1,12 +1,25 @@
 # Changelog
 
+## 0.4.0 (2023-06-28)
+
+### feat: Add admin + owner pages
+
+- Add admin and owner pages
+- implement feat for admin
+  - check if user is the owner
+  - get winningProposalID
+  - get WorkflowStatus
+  - add a voter
+
+---
+
 ## 0.3.0 (2023-06-27)
 
 ### feat: Add .env + projectId
 
 - Add .env.development
 - Add .env.production
-- set projectId
+- set projectId`
 
 ---
 

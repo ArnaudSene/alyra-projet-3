@@ -1,24 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import {
-    RainbowKitProvider,
-    getDefaultWallets,
-    connectorsForWallets,
-} from '@rainbow-me/rainbowkit';
-import {
-    argentWallet,
-    trustWallet,
-    ledgerWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import {
-    hardhat,
-    sepolia
-} from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
+import {connectorsForWallets, getDefaultWallets, RainbowKitProvider,} from '@rainbow-me/rainbowkit';
+import {argentWallet, ledgerWallet, trustWallet,} from '@rainbow-me/rainbowkit/wallets';
+import {configureChains, createConfig, WagmiConfig} from 'wagmi';
+import {hardhat, sepolia} from 'wagmi/chains';
+import {publicProvider} from 'wagmi/providers/public';
 
-export const contractAddress = process.env.CONTRACT_ADDRESS
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
     [
@@ -54,7 +42,7 @@ const connectors = connectorsForWallets([
 ]);
 
 const wagmiConfig = createConfig({
-    autoConnect: true,
+    autoConnect: false,
     connectors,
     publicClient,
     webSocketPublicClient,
@@ -66,8 +54,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <WagmiConfig config={wagmiConfig}>
             <RainbowKitProvider chains={chains} appInfo={demoAppInfo}>
+
                 {mounted && children}
+
             </RainbowKitProvider>
         </WagmiConfig>
+
     );
 }

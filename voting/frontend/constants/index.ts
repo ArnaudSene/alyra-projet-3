@@ -1,4 +1,4 @@
-export const contractAddress = `${process.env.CONTRACT_ADDRESS}`
+export const contractAddress  = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`
 export const abi = [
     {
         "anonymous": false,
