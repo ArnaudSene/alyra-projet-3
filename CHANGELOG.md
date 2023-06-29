@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0 (2023-06-29)
+
+### feat: Manage workflow status 
+
+- New component to manage workflow status
+- Add context for workflow status 
+
+---
+
 ## 0.8.0 (2023-06-29)
 
 ### style: Update CSS design
