@@ -25,18 +25,16 @@ const Headers = () => {
     }, [address, isConnected])
 
     return (
-        <header className="bg-gray-700 text-gray-100">
-            <nav className="container mx-auto flex justify-between items-center text-center p-4">
-                <Link className="text-lg font-bold hover:text-indigo-500" href="/">Home</Link>
+        <header className="bg-gray-950 text-gray-100 border-gray-500 border-b">
+            <nav className="mx-auto flex justify-between items-center text-center p-4">
+                <Link className="w-1/3 text-lg font-bold hover:text-indigo-500" href="/">Home</Link>
 
-                <div>
-                    <ConnectButton />
-                </div>
-
-                <div>
+                <div className="w-1/3">
                     {isOwner && <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/admin">Admin</Link>}
                     {isVoter && <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/voters">Voters</Link>}
                 </div>
+                
+                {isConnected && <div className="w-1/3"><ConnectButton /></div>}
             </nav>
         </header>
     )

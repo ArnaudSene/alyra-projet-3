@@ -26,7 +26,7 @@ const ProposalManager = () => {
     return (
         <section className="m-auto mt-2 w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
             <form className="w-full max-w-sm m-auto p-3">
-                <div className="flex items-center border-b border-teal-500 py-2">
+                <div className="flex items-center border-b border-indigo-400 py-2">
                     <textarea className="appearance-none bg-transparent border-none w-full text-gray-50 mr-3 py-1 px-2 leading-tight focus:outline-none"
                         name="proposal"
                         required
@@ -35,7 +35,7 @@ const ProposalManager = () => {
                         onChange={e => setProposal(e.target.value)}
                     />
 
-                    <button className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+                    <button className="flex-shrink-0 bg-indigo-950 hover:bg-indigo-900 font-semibold border border-indigo-400 text-white py-1 px-2 rounded"
                         type="button"
                         onClick={() => submitProposal()}
                     >
@@ -45,7 +45,7 @@ const ProposalManager = () => {
             </form>
 
             {sucess && <div className="text-green-600 font-semibold p-4 text-center">Proposal added with sucess ! Transaction: {sucess}</div>}
-            {error && <div className="text-red-800 font-semibold p-4 text-center">{error}</div>}
+            {error && <div className="text-red-600 font-semibold p-4 text-center">{error}</div>}
         </section>
     );
 }
