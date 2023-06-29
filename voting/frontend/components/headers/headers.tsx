@@ -14,13 +14,14 @@ const Headers = () => {
     useEffect(() => {if (isConnected) getIsVoter()}, [isConnected])
 
     const getIsVoter = async () => {
-        try {
-            setIsVoter(false)
-            const data = await readContractByFunctionName('getVoter', address)
-            if (data && data.isRegistered) setIsVoter(true)
-        } catch (err: any) {
-            console.log('Error: ', err.message)
-        }
+        setIsVoter(false)
+        readContractByFunctionName<Voter>('getVoter', address as `0x${string}`).then(
+            (data: Voter) => {
+                if (data && data.isRegistered) setIsVoter(true)
+            }
+        ).catch(
+            err => console.log(err.message)
+        )
     }
 
     return (

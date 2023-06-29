@@ -1,6 +1,7 @@
-import { useAccount } from "wagmi";
+import { ReactNode } from "react"
+import { useAccount } from "wagmi"
 
-const IsConnected = ({ children }: any) => {
+const IsConnected = ({ children }: { children: ReactNode }) => {
     const { isConnected } = useAccount()
 
     return (

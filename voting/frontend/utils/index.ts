@@ -1,62 +1,57 @@
 import { abi, contractAddress } from "@/constants"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
 import { BaseError, ContractFunctionRevertedError } from "viem"
-import { useContractEvent } from "wagmi"
 
-export const readContractByFunctionName = async (functionName: string, ...args: any): Promise<any> => {
-    return await readContract({
-        address: contractAddress,
-        abi: abi,
-        functionName: functionName,
-        args: args
-    })
-}
-
-export const prepareWriteContractByFunctionName = async (functionName: string, ...args: any): Promise<any> => {
-    return await prepareWriteContract({
-        address: contractAddress,
-        abi: abi,
-        functionName: functionName,
-        args: args
-    })
-}
-
-export const writeContractByFunctionName = async (functionName: string, ...args: any): Promise<`0x${string}`> => {
+export const readContractByFunctionName = async <T>(functionName: string, ...args: `0x${string}`[]|string[]): Promise<T> => {
     try {
-        const { request } = await prepareWriteContractByFunctionName(functionName, ...args)
+        const data: Promise<T>|unknown = await readContract({
+            address: contractAddress,
+            abi: abi,
+            functionName: functionName,
+            args: args
+        })
+
+        return data as T
+      } catch (err) {
+        throw formattedError(err)
+      }
+}
+
+export const writeContractByFunctionName = async (functionName: string, ...args: `0x${string}`[]|string[]): Promise<`0x${string}`> => {
+    try {
+        const { request } = await prepareWriteContract({
+            address: contractAddress,
+            abi: abi,
+            functionName: functionName,
+            args: args
+        })
+
         const { hash } = await writeContract(request)
         
         return hash
-    } catch (err: any) {
-        if (err instanceof BaseError) {
-            // Option 1: checking the instance of the error
-            if (err.cause instanceof ContractFunctionRevertedError) {
-                const cause: ContractFunctionRevertedError = err.cause
-                const error = cause.data?.errorName ?? 'Unkown error'
-
-                throw new Error(error)
-            }
-    
-            // Option 2: using `walk` method from `BaseError`
-            const revertError: any = err.walk(err => err instanceof ContractFunctionRevertedError)
-            if (revertError) {
-                const error = revertError.data?.message ?? 'Unkown error'
-                
-                throw new Error(error)
-            }
-        }
-
-        throw new Error(err.message)
+    } catch (err) {
+        throw formattedError(err)
     }
 }
 
-export const useContractEventByName = (eventName: string): any => {
-    useContractEvent({
-        address: contractAddress,
-        abi: abi,
-        eventName: eventName,
-        listener(log) {
-            return new Promise(() => log)
-        },
-    })
+const formattedError = (err: any) => {
+    if (err instanceof BaseError) {
+        // Option 1: checking the instance of the error
+        if (err.cause instanceof ContractFunctionRevertedError) {
+            const cause: ContractFunctionRevertedError = err.cause
+            const error = cause.data?.errorName ?? 'Unkown error'
+
+            throw new Error(error)
+        }
+
+        // Option 2: using `walk` method from `BaseError`
+        const revertError: any = err.walk(err => err instanceof ContractFunctionRevertedError)
+        if (revertError) {
+            const error = revertError.data?.message ?? 'Unkown error'
+
+            throw new Error(error)
+        }
+    }
+
+    throw new Error(err.message)
 }

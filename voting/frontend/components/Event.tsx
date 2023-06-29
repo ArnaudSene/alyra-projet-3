@@ -5,7 +5,7 @@ import { useState } from "react"
 import { Log } from "viem"
 import { useContractEvent } from "wagmi"
 
-const Event = ({ name }: any) => {
+const Event = ({ name }: { name: string }) => {
     const [logs, setLogs] = useState<Log[]>()
 
     useContractEvent({
