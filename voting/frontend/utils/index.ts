@@ -3,13 +3,13 @@ import { Voter } from "@/interfaces/Voter"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
 import { BaseError, ContractFunctionRevertedError } from "viem"
 
-export const getIsOwner = async (address: `0x${string}`): Promise<boolean> => {
+export const userIsOwner = async (address: `0x${string}`): Promise<boolean> => {
     return readContractByFunctionName<`0x${string}`>('owner').then(
         hash => hash === address
     ).catch(() => false)
 }
 
-export const getIsVoter = async (address: `0x${string}`): Promise<boolean> => {
+export const userIsVoter = async (address: `0x${string}`): Promise<boolean> => {
     return readContractByFunctionName<Voter>('getVoter', address).then(
         data => data && data.isRegistered
     ).catch(() => false)

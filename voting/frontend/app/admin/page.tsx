@@ -30,9 +30,9 @@ const Admin = () => {
   const getOwner = async () => {
     readContractByFunctionName<`0x${string}`>('owner').then(
       hash => {
+        if (hash !== address) push('/')
         setOwner(hash)
         setIsOwner(hash === address)
-        if (hash !== address) push('/')
     }).catch(() => push('/'))
   }
 

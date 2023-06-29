@@ -1,6 +1,6 @@
 'use client'
 
-import { getIsOwner, getIsVoter } from "@/utils";
+import { userIsOwner, userIsVoter } from "@/utils";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,12 +13,12 @@ const Headers = () => {
 
     useEffect(() => {
         if (isConnected) {
-            getIsVoter(address as `0x${string}`)
+            userIsVoter(address as `0x${string}`)
                 .then(isVoter => setIsVoter(isVoter))
                 .catch(() => setIsVoter(false))
             
                 
-            getIsOwner(address as `0x${string}`)
+            userIsOwner(address as `0x${string}`)
                 .then(isOwner => setIsOwner(isOwner))
                 .catch(() => setIsOwner(false))
         }
