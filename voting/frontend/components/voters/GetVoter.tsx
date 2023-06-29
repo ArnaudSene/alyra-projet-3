@@ -4,19 +4,24 @@ import { useState } from "react";
 import { readContractByFunctionName } from "@/utils";
 import { Voter } from "@/interfaces/Voter";
 
-
 const GetVoter = () => {
+    const validAddress = new RegExp("^0x[a-fA-F0-9]{40}$")
+
     const [error, setError] = useState('');
     const [voterAddress, setVoterAddress] = useState('')
     const [voter, setVoter] = useState<Voter>()
 
     const getVoter = async () => {
         setError('')
-        try {
-            const data = await readContractByFunctionName('getVoter', voterAddress)
-            setVoter(data)
-        } catch (err: any) {
-            setError(err.message)
+
+        if (!validAddress.test(voterAddress)) {
+            setError('Invalid etherum address');
+        } else {
+            readContractByFunctionName<Voter>('getVoter', voterAddress).then(
+                voter => setVoter(voter)
+            ).catch(
+                err => setError(err.message)
+            )
         }
     }
 

@@ -10,8 +10,8 @@ import Event from "@/components/Event";
 
 const Admin = () => {
   const { address, isConnected } = useAccount()
-  const [owner, setOwner] = useState(null)
-  const [winningProposalID, setWinningProposalID] = useState(null)
+  const [owner, setOwner] = useState('')
+  const [winningProposalID, setWinningProposalID] = useState<number|null>(null)
   const [workflowStatus, setWorkflowStatus] = useState(0)
 
   const WorkflowStatus: string[] = [
@@ -24,30 +24,27 @@ const Admin = () => {
   ]
 
   const getOwner = async () => {
-    try {
-      const data = await readContractByFunctionName('owner')
-      setOwner(data.toString())
-    } catch (err: any) {
-      console.log('Error: ', err.message)
-    }
+    readContractByFunctionName<`0x${string}`>('owner').then(
+        hash => setOwner(hash)
+    ).catch(
+        err => console.log(err.message)
+    )
   }
 
   const getWinningProposalID = async () => {
-    try {
-      const data = await readContractByFunctionName('winningProposalID')
-      setWinningProposalID(data.toString())
-    } catch (err: any) {
-      console.log('Error: ', err.message)
-    }
+    readContractByFunctionName<number>('winningProposalID').then(
+        id => setWinningProposalID(id)
+    ).catch(
+        err => console.log(err.message)
+    )
   }
 
   const getWorkflowStatus = async () => {
-    try {
-      const data = await readContractByFunctionName('workflowStatus')
-      setWorkflowStatus(data.toString())
-    } catch (err: any) {
-      console.log('Error: ', err.message)
-    }
+    readContractByFunctionName<number>('workflowStatus').then(
+        id => setWorkflowStatus(id)
+    ).catch(
+        err => console.log(err.message)
+    )
   }
 
   useEffect(() => {

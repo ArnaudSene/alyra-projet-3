@@ -1,13 +1,12 @@
-import { useAccount } from "wagmi";
+import { ReactNode } from "react"
+import { useAccount } from "wagmi"
 
-const IsConnected = ({ children }: any) => {
+const IsConnected = ({ children }: { children: ReactNode }) => {
     const { isConnected } = useAccount()
 
     return (
         <>
-            {isConnected ? (
-                <>{children}</>
-            ) : (
+            {isConnected ? children : (
                 <div className="mx-auto w-3/4 rounded h-auto min-h-[50px] text-center bg-gradient-to-r from-indigo-950 to-rose-600 text-zinc-200 shadow-lg">
                     <div className="p-6 font-semibold text-md">
                         Please connect your Wallet.

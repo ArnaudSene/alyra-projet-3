@@ -18,7 +18,7 @@ const VoterManager = () => {
             setError('Invalid etherum address');
         } else {
             writeContractByFunctionName('addVoter', newVoter).then(
-                hash => setSucess(hash as string)
+                hash => setSucess(hash)
             ).catch(
                 err => setError(err.message)
             )
