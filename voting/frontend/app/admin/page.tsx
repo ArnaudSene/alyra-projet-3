@@ -4,28 +4,17 @@ import { useAccount } from "wagmi"
 import { useEffect, useState } from "react"
 import { readContractByFunctionName } from "@/utils"
 import { useRouter } from 'next/navigation';
-
-import VoterManager from "@/components/admin/VoterManager"
 import IsConnected from "@/components/IsConnected";
 import Event from "@/components/Event";
+import WorkflowManager from "@/components/admin/WorkflowManager";
 
 const Admin = () => {
   const { address, isConnected } = useAccount()
   const { push } = useRouter()
-
   const [owner, setOwner] = useState('')
   const [winningProposalID, setWinningProposalID] = useState<number|null>(null)
-  const [workflowStatus, setWorkflowStatus] = useState(0)
   const [isOwner, setIsOwner] = useState(false)
 
-  const WorkflowStatus: string[] = [
-    "RegisteringVoters",
-    "ProposalsRegistrationStarted",
-    "ProposalsRegistrationEnded",
-    "VotingSessionStarted",
-    "VotingSessionEnded",
-    "VotesTallied"
-  ]
 
   const getOwner = async () => {
     readContractByFunctionName<`0x${string}`>('owner').then(
@@ -44,19 +33,10 @@ const Admin = () => {
     )
   }
 
-  const getWorkflowStatus = async () => {
-    readContractByFunctionName<number>('workflowStatus').then(
-        id => setWorkflowStatus(id)
-    ).catch(
-        err => console.log(err.message)
-    )
-  }
-
   useEffect(() => {
     if (isConnected) {
       getOwner()
       getWinningProposalID()
-      getWorkflowStatus()
     }
   }, [address, isConnected])
 
@@ -78,15 +58,7 @@ const Admin = () => {
               </div>
             </div>
 
-            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-              <div className="p-4">
-                WorkflowStatus : {WorkflowStatus[workflowStatus]}
-              </div>
-            </div>
-
-            {WorkflowStatus[workflowStatus] === "RegisteringVoters" ? (
-              <VoterManager />
-            ) : (<></>)}
+            <WorkflowManager />
 
             <Event name='VoterRegistered'></Event>
           </>
