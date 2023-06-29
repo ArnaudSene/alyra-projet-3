@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 (2023-06-29)
+
+### style: Update CSS design
+
+- Switch to `darkmode` body
+- Update headers component style
+
+---
+
 ## 0.7.0 (2023-06-29)
 
 ### feat: Set restriction for Admin & Voter section

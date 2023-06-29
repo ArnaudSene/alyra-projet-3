@@ -7,7 +7,7 @@ import Headers from "@/components/headers/headers";
 function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className="bg-gray-50">
+            <body className="bg-gray-900 text-slate-200">
                 <Providers>
                     <Headers />
 
