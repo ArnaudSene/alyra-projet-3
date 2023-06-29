@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.0 (2023-06-29)
+
+### feat: Set restriction for Admin & Voter section
+
+- Set Admin restriction Header menu
+- Set Voter restriction Header menu
+- Set Admin restriction on admin page
+- Set Voter restriction on voter page
+
+---
+
 ## 0.6.0 (2023-06-29)
 
 ### feat: Add ProposalManager
