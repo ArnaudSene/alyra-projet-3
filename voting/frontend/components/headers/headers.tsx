@@ -1,28 +1,28 @@
 'use client'
 
-import { readContractByFunctionName } from "@/utils";
+import { userIsOwner, userIsVoter } from "@/utils";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { Voter } from "@/interfaces/Voter";
 
 const Headers = () => {
     const { address, isConnected } = useAccount()
     const [isVoter, setIsVoter] = useState(false)
+    const [isOwner, setIsOwner] = useState(false)
 
-    useEffect(() => {if (isConnected) getIsVoter()}, [isConnected])
-
-    const getIsVoter = async () => {
-        setIsVoter(false)
-        readContractByFunctionName<Voter>('getVoter', address as `0x${string}`).then(
-            (data: Voter) => {
-                if (data && data.isRegistered) setIsVoter(true)
-            }
-        ).catch(
-            err => console.log(err.message)
-        )
-    }
+    useEffect(() => {
+        if (isConnected) {
+            userIsVoter(address as `0x${string}`)
+                .then(isVoter => setIsVoter(isVoter))
+                .catch(() => setIsVoter(false))
+            
+                
+            userIsOwner(address as `0x${string}`)
+                .then(isOwner => setIsOwner(isOwner))
+                .catch(() => setIsOwner(false))
+        }
+    }, [address, isConnected])
 
     return (
         <header className="bg-gray-700 text-gray-100">
@@ -34,10 +34,7 @@ const Headers = () => {
                 </div>
 
                 <div>
-                    {/* @TODO Block if admin */}
-                    <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/admin">Admin</Link>
-                    {/* @TODO Block if admin */}
-
+                    {isOwner && <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/admin">Admin</Link>}
                     {isVoter && <Link className="p-2 font-semibold hover:text-indigo-500 hover:font-bold" href="/voters">Voters</Link>}
                 </div>
             </nav>
