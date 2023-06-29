@@ -6,7 +6,7 @@ import {argentWallet, ledgerWallet, trustWallet,} from '@rainbow-me/rainbowkit/w
 import {configureChains, createConfig, WagmiConfig} from 'wagmi';
 import {hardhat, sepolia} from 'wagmi/chains';
 import {publicProvider} from 'wagmi/providers/public';
-
+import { ChakraProvider } from '@chakra-ui/react';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
     [
@@ -54,9 +54,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <WagmiConfig config={wagmiConfig}>
             <RainbowKitProvider chains={chains} appInfo={demoAppInfo}>
-
-                {mounted && children}
-
+                <ChakraProvider>
+                    {mounted && children}
+                </ChakraProvider>
             </RainbowKitProvider>
         </WagmiConfig>
 

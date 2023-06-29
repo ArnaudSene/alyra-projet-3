@@ -1,29 +1,46 @@
 "use client"
 
-import { useState } from "react";
-import { writeContractByFunctionName } from "@/utils"
+import { useEffect, useState } from "react";
+import { client, writeContractByFunctionName } from "@/utils"
+import { parseAbiItem } from "viem";
+import { ListItem, UnorderedList } from "@chakra-ui/react";
+import { VoterRegistered } from "@/constants";
 
 const VoterManager = () => {
     const validAddress = new RegExp("^0x[a-fA-F0-9]{40}$")
 
     const [newVoter, setNewVoter] = useState('')
     const [error, setError] = useState('')
-    const [sucess, setSucess] = useState('')
+    const [success, setSuccess] = useState('')
+    const [depositEvents, setDepositEvents] = useState<`0x${string}`[]>([])
+
+    const getEvents = async () => {
+        const depositLogs = await client.getLogs({
+            event: parseAbiItem(VoterRegistered),
+            fromBlock: 0n
+        })
+        setDepositEvents(depositLogs.map(log => log.args.voterAddress as `0x${string}`))
+    }
 
     const addVoter = async () => {
         setError('')
-        setSucess('')
+        setSuccess('')
 
         if (!validAddress.test(newVoter)) {
             setError('Invalid etherum address');
         } else {
             writeContractByFunctionName('addVoter', newVoter).then(
-                hash => setSucess(hash)
+                hash => setSuccess(hash)
             ).catch(
                 err => setError(err.message)
             )
         }
     }
+
+    useEffect(() => {
+        const getVoterRegistered = async () => await getEvents()
+        getVoterRegistered()
+    }, [success])
 
     return (
         <section className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
@@ -39,8 +56,16 @@ const VoterManager = () => {
                 </div>
             </div>
 
-            {sucess && <div className="text-green-600 font-semibold p-4 text-center">Voter added with sucess ! Transaction: {sucess}</div>}
+            {success && <div className="text-green-600 font-semibold p-4 text-center">Voter added with success ! Transaction: {success}</div>}
             {error && <div className="text-red-600 font-semibold p-4 text-center">{error}</div>}
+
+            <div className="m-auto w-3/4">
+                <h3 className="font-bold text-lg text-center mb-3">Voter's Address Registered</h3>
+
+                <UnorderedList>
+                    {depositEvents.map((voter, i) => <ListItem key={i}>{voter}</ListItem>)}
+                </UnorderedList>
+            </div>
         </section>
     )
 }

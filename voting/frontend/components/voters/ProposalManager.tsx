@@ -6,17 +6,17 @@ import { useState } from "react"
 const ProposalManager = () => {
     const [proposal, setProposal] = useState('')
     const [error, setError] = useState('')
-    const [sucess, setSucess] = useState('')
+    const [success, setSuccess] = useState('')
 
     const submitProposal = () => {
         setError('')
-        setSucess('')
+        setSuccess('')
 
         if (proposal.trim().length <= 0) {
             setError('Proposal can\'t be empty')
         } else {
             writeContractByFunctionName('addProposal', proposal).then(
-                hash => setSucess(hash)
+                hash => setSuccess(hash)
             ).catch(
                 err => setError(err.message)
             )
@@ -44,7 +44,7 @@ const ProposalManager = () => {
                 </div>
             </form>
 
-            {sucess && <div className="text-green-600 font-semibold p-4 text-center">Proposal added with sucess ! Transaction: {sucess}</div>}
+            {success && <div className="text-green-600 font-semibold p-4 text-center">Proposal added with success ! Transaction: {success}</div>}
             {error && <div className="text-red-600 font-semibold p-4 text-center">{error}</div>}
         </section>
     );

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 (2023-06-29)
+
+### feat: Manage past event logs
+
+- Manage past event logs for add voters
+
+---
+
 ## 0.9.0 (2023-06-29)
 
 ### feat: Manage workflow status 

@@ -1,7 +1,14 @@
 import { abi, contractAddress } from "@/constants"
 import { Voter } from "@/interfaces/Voter"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
-import { BaseError, ContractFunctionRevertedError } from "viem"
+import { BaseError, ContractFunctionRevertedError, createPublicClient, http } from "viem"
+import { hardhat } from "viem/chains"
+
+
+export const client = createPublicClient({
+    chain: hardhat,
+    transport: http()
+})
 
 export const userIsOwner = async (address: `0x${string}`): Promise<boolean> => {
     return readContractByFunctionName<`0x${string}`>('owner').then(

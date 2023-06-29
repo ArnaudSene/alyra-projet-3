@@ -1,4 +1,5 @@
 export const contractAddress  = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}` as `0x${string}`
+export const VoterRegistered = 'event VoterRegistered(address voterAddress)'
 export const abi = [
     {
         "anonymous": false,
