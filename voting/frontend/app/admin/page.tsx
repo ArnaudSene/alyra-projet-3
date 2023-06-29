@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { readContractByFunctionName } from "@/utils"
 import { useRouter } from 'next/navigation';
 import IsConnected from "@/components/IsConnected";
-import Event from "@/components/Event";
 import WorkflowManager from "@/components/admin/WorkflowManager";
 
 const Admin = () => {
@@ -59,8 +58,6 @@ const Admin = () => {
             </div>
 
             <WorkflowManager />
-
-            <Event name='VoterRegistered'></Event>
           </>
 
         ) : (
