@@ -16,6 +16,7 @@ export const WorkflowStatusContextProvider = ({ children }) => {
     const [workflowStatus, setWorkflowStatus] = useState(0)
 
     return (
+
         <WorkflowStatusContext.Provider value={{
             workflowStatus: workflowStatus,
             setWorkflowStatus: setWorkflowStatus
