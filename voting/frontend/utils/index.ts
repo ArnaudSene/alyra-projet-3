@@ -25,7 +25,7 @@ export const userIsVoter = async (address: `0x${string}`): Promise<boolean> => {
     ).catch(() => false)
 }
 
-export const readContractByFunctionName = async <T>(functionName: string, ...args: `0x${string}`[]|string[]): Promise<T> => {
+export const readContractByFunctionName = async <T>(functionName: string, ...args: `0x${string}`[]|string[]|number[]): Promise<T> => {
     try {
         const data: Promise<T>|unknown = await readContract({
             address: contractAddress,
