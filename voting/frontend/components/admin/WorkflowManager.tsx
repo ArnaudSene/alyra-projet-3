@@ -67,7 +67,7 @@ const WorkflowManager = () => {
             {WorkflowStatus[workflowStatus] !== votesTalliedStatus &&
                 <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border p-4">
                     <button onClick={() => nextWorkflowStatus()} className="bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg">
-                        Next Etape: {WorkflowStatus[workflowStatus + 1]}
+                        Next Step: {WorkflowStatus[workflowStatus + 1]}
                     </button>
                 </div>
             }
