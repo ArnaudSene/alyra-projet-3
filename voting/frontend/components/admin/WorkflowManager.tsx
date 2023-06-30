@@ -5,21 +5,35 @@ import { getWorkflowStatus, writeContractByFunctionName } from "@/utils";
 import { useWorkflowStatusContext } from "@/context/workflowStatus";
 import Event from "@/components/Event";
 import { useToast } from "@chakra-ui/react";
-import { WorkflowStatus, proposalsRegistrationEndedStatus, proposalsRegistrationStartedStatus, registeringVotersStatus, votesTalliedStatus, votingSessionEndedStatus, votingSessionStartedStatus } from "@/constants";
+import { WorkflowStatus, abi, contractAddress, proposalsRegistrationEndedStatus, proposalsRegistrationStartedStatus, registeringVotersStatus, votesTalliedStatus, votingSessionEndedStatus, votingSessionStartedStatus } from "@/constants";
+import { useContractEvent } from "wagmi";
+import { Log } from "viem";
+import Loader from "../Loader";
 
 const WorkflowManager = () => {
-    const [success, setSuccess] = useState('')
+    const [logs, setLogs] = useState<Log[]>()
+    const [loading, setLoading] = useState(true)
+
     const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
     const toast = useToast()
+
+    useContractEvent({
+        address: contractAddress,
+        abi: abi,
+        eventName: 'WorkflowStatusChange',
+        listener(log) {
+            setLogs(log)
+        }
+    })
 
     useEffect(() => {
         getWorkflowStatus().then(
             id => setWorkflowStatus(id)
         ).catch(err => console.log(err))
-    }, [success])
+        .finally(() => setLoading(false))
+    }, [logs])
 
     const nextWorkflowStatus = () => {
-        setSuccess('')
         let funcName = '';
         switch (WorkflowStatus[workflowStatus]) {
             case registeringVotersStatus: funcName = 'startProposalsRegistering'
@@ -36,7 +50,7 @@ const WorkflowManager = () => {
 
         writeContractByFunctionName(funcName).then(
             hash => {
-                setSuccess(hash)
+                setLoading(true)
                 toast({
                     title: 'Workflow status updated.',
                     description: `Transaction: ${hash}`,
@@ -57,7 +71,7 @@ const WorkflowManager = () => {
     }
 
     return (
-        <>
+        <Loader isLoading={loading}>
             <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
                 <div className="p-4 font-bold text-md">
                     WorkflowStatus : {WorkflowStatus[workflowStatus]}
@@ -73,7 +87,7 @@ const WorkflowManager = () => {
             }
 
             <Event name='WorkflowStatusChange'></Event>
-        </>
+        </Loader>
     )
 }
 export default WorkflowManager

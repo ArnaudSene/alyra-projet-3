@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.13.0 (2023-06-30)
+
+### fix: Add Loader component + fix on sepolia
+
+- Add Loader component
+- Some fixes on sepolia
+
+---
+
 ## 0.12.0 (2023-06-30)
 
 ### feat: Refactoring + Implement Send vote

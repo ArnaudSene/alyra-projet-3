@@ -1,15 +1,22 @@
-import { abi, contractAddress } from "@/constants"
+import { abi, contractAddress, network } from "@/constants"
 import { Voter } from "@/interfaces/Voter"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
 import { BaseError, ContractFunctionRevertedError, createPublicClient, http } from "viem"
-import { hardhat } from "viem/chains"
+import { hardhat, sepolia } from "viem/chains"
 
 export const getWorkflowStatus = async (): Promise<number> => {
     return readContractByFunctionName<number>('workflowStatus')
 }
 
+const usedNetwork = () => {
+    switch (network) {
+        case 'sepolia': return sepolia
+        case 'hardhat': return hardhat
+    }
+}
+
 export const client = createPublicClient({
-    chain: hardhat,
+    chain: usedNetwork(),
     transport: http()
 })
 
@@ -57,12 +64,12 @@ export const writeContractByFunctionName = async (functionName: string, ...args:
     }
 }
 
-const formattedError = (err: any) => {
+const formattedError = (err: any): Error => {
     if (err instanceof BaseError) {
         // Option 1: checking the instance of the error
         if (err.cause instanceof ContractFunctionRevertedError) {
             const cause: ContractFunctionRevertedError = err.cause
-            const error = cause.data?.errorName ?? 'Unkown error'
+            const error = cause.reason ?? 'Unkown error'
 
             throw new Error(error)
         }
@@ -75,6 +82,7 @@ const formattedError = (err: any) => {
             throw new Error(error)
         }
     }
+
 
     throw new Error(err.message)
 }
