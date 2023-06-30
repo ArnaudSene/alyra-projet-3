@@ -3,6 +3,7 @@
 import { writeContractByFunctionName } from "@/utils"
 import { useState } from "react"
 import { useToast } from "@chakra-ui/react"
+import Event from "../Event"
 
 const SendVote = () => {
     const [vote, setVote] = useState('')
@@ -38,7 +39,7 @@ const SendVote = () => {
         }
     }
 
-    return (
+    return (<>
         <section className="m-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
             <h2 className="font-bold text-lg text-center mb-3">Vote for a Proposal</h2>
             <form className="w-full m-auto p-3 pr-3">
@@ -61,6 +62,8 @@ const SendVote = () => {
                 </div>
             </form>
         </section>
-    );
+        
+        <Event name='Voted'></Event>
+    </>);
 }
 export default SendVote;
