@@ -21,7 +21,8 @@ const VoterManager = () => {
     const getEvents = async () => {
         const depositLogs = await client.getLogs({
             event: parseAbiItem(VoterRegistered),
-            fromBlock: BigInt(genesisBlock)
+            fromBlock: BigInt(genesisBlock),
+            toBlock: 'latest'
         })
         setDepositEvents(depositLogs.map(log => log.args.voterAddress as `0x${string}`))
     }
