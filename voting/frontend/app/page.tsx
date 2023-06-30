@@ -20,7 +20,7 @@ export default function Home() {
             <ConnectButton />
           </div>
 
-      </>) : (<h1 className="font-bold">Homepage</h1>)}
+      </>) : (<h1 className="font-bold text-center">Homepage</h1>)}
     </div>
   )
 }
