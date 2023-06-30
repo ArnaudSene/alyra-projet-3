@@ -9,11 +9,13 @@ import { WorkflowStatus, abi, contractAddress, proposalsRegistrationEndedStatus,
 import { useContractEvent } from "wagmi";
 import { Log } from "viem";
 import Loader from "../Loader";
+import {useAccount} from "wagmi";
 
 const WorkflowManager = () => {
     const [logs, setLogs] = useState<Log[]>()
     const [loading, setLoading] = useState(true)
 
+    const { address } = useAccount()
     const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
     const toast = useToast()
 
@@ -27,7 +29,7 @@ const WorkflowManager = () => {
     })
 
     useEffect(() => {
-        getWorkflowStatus().then(
+        getWorkflowStatus(address as `0x${string}`).then(
             id => setWorkflowStatus(id)
         ).catch(err => console.log(err))
         .finally(() => setLoading(false))

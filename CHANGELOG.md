@@ -20,6 +20,14 @@
 - Refactor WorkflowManager
 - Fix the refresh of WorkflowStatus
 
+## 0.11.1 (2023-06-30)
+
+### fix: readContract needs address as params 
+
+- readContractByFunctionName receive a new mandatory parameter
+  - readContract function has an optional parameter `account`. Unfortunately the request fails If this parameter is excluded
+  - https://viem.sh/docs/contract/readContract.html#account-optional
+
 ---
 
 ## 0.11.0 (2023-06-29)
