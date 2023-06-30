@@ -17,14 +17,14 @@ const IsConnected = ({ children, asOwner, asVoter }: {
 
     useEffect(() => {
         if (isConnected) {
-            userIsOwner(address as `0x${string}`).then(
+            if (asOwner) userIsOwner(address as `0x${string}`).then(
                 isOwner => {
                     if (!isOwner && asOwner) push('/')
                     else setIsOwner(isOwner)
                 }
             ).catch(() => push('/'))
 
-            userIsVoter(address as `0x${string}`).then(
+            if (asVoter) userIsVoter(address as `0x${string}`).then(
                 isVoter => {
                     if (!isVoter && asVoter) push('/')
                     else setIsVoter(isVoter)
