@@ -28,14 +28,16 @@ const IsConnected = ({ children, asOwner, asVoter }: {
                 }
             ).catch(() => push('/'))
             .finally(() => setLoading(false))
-
-            if (asVoter) userIsVoter(address as `0x${string}`).then(
+            
+            else if (asVoter) userIsVoter(address as `0x${string}`).then(
                 isVoter => {
                     if (!isVoter && asVoter) push('/')
                     else setIsVoter(isVoter)
                 }
             ).catch(() => push('/'))
             .finally(() => setLoading(false))
+
+            else setLoading(false)
         } else push('/')
     }, [address, isConnected])
 
