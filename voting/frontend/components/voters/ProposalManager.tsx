@@ -7,12 +7,14 @@ import SendVote from "./SendVote"
 import SendProposal from "./SendProposal"
 import { useEffect } from "react"
 import { getWorkflowStatus } from "@/utils"
+import {useAccount} from "wagmi";
 
 const ProposalManager = () => {
+    const { address } = useAccount()
     const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
 
     useEffect(() => {
-        getWorkflowStatus().then(
+        getWorkflowStatus(address as `0x${string}`).then(
             id => setWorkflowStatus(id)
         ).catch(err => console.log(err))
     }, [workflowStatus])

@@ -6,14 +6,16 @@ import { useWorkflowStatusContext } from "@/context/workflowStatus";
 import Event from "@/components/Event";
 import { useToast } from "@chakra-ui/react";
 import { WorkflowStatus, proposalsRegistrationEndedStatus, proposalsRegistrationStartedStatus, registeringVotersStatus, votesTalliedStatus, votingSessionEndedStatus, votingSessionStartedStatus } from "@/constants";
+import {useAccount} from "wagmi";
 
 const WorkflowManager = () => {
+    const { address } = useAccount()
     const [success, setSuccess] = useState('')
     const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
     const toast = useToast()
 
     useEffect(() => {
-        getWorkflowStatus().then(
+        getWorkflowStatus(address as `0x${string}`).then(
             id => setWorkflowStatus(id)
         ).catch(err => console.log(err))
     }, [success])
