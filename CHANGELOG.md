@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.1 (2023-06-30)
+
+### fix: readContract needs address as params 
+
+- Add optional account attribute to readContract function
+- https://viem.sh/docs/contract/readContract.html
+- Add parameter for every call
+
+---
+
 ## 0.11.0 (2023-06-29)
 
 ### style: chakra-ui toast + css update
