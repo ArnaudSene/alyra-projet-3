@@ -1,5 +1,22 @@
 export const contractAddress  = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}` as `0x${string}`
 export const VoterRegistered = 'event VoterRegistered(address voterAddress)'
+
+export const registeringVotersStatus = 'RegisteringVoters'
+export const proposalsRegistrationStartedStatus = 'ProposalsRegistrationStarted'
+export const proposalsRegistrationEndedStatus = 'ProposalsRegistrationEnded'
+export const votingSessionStartedStatus = 'VotingSessionStarted'
+export const votingSessionEndedStatus = 'VotingSessionEnded'
+export const votesTalliedStatus = 'VotesTallied'
+
+export const WorkflowStatus: ('RegisteringVoters' | 'ProposalsRegistrationStarted' | 'ProposalsRegistrationEnded' | 'VotingSessionStarted' | 'VotingSessionEnded' | 'VotesTallied')[] = [
+    'RegisteringVoters',
+    'ProposalsRegistrationStarted',
+    'ProposalsRegistrationEnded',
+    'VotingSessionStarted',
+    'VotingSessionEnded',
+    'VotesTallied'
+]
+
 export const abi = [
     {
         "anonymous": false,

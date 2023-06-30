@@ -4,6 +4,10 @@ import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
 import { BaseError, ContractFunctionRevertedError, createPublicClient, http } from "viem"
 import { hardhat } from "viem/chains"
 
+export const getWorkflowStatus = async (): Promise<number> => {
+    return readContractByFunctionName<number>('workflowStatus')
+}
+
 export const client = createPublicClient({
     chain: hardhat,
     transport: http()

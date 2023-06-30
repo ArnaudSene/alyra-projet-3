@@ -1,54 +1,30 @@
 "use client"
 
 import IsConnected from "@/components/IsConnected"
+import WinningProposal from "@/components/WinningProposal"
+import VoterManager from "@/components/admin/VoterManager"
 import WorkflowManager from "@/components/admin/WorkflowManager"
-import { readContractByFunctionName } from "@/utils"
-import { useEffect, useState } from "react"
-import { useAccount } from "wagmi"
+
+import { WorkflowStatus, registeringVotersStatus, votesTalliedStatus } from "@/constants"
+import { useWorkflowStatusContext } from "@/context/workflowStatus"
+import { getWorkflowStatus } from "@/utils"
+import { useEffect } from "react"
 
 const Admin = () => {
-  const { address, isConnected } = useAccount()
-  const [owner, setOwner] = useState('')
-  const [winningProposalID, setWinningProposalID] = useState<number|null>(null)
-
-  const getOwner = async () => {
-    readContractByFunctionName<`0x${string}`>('owner').then(
-      hash => setOwner(hash)
-    ).catch(err => console.log(err.message))
-  }
-
-  const getWinningProposalID = async () => {
-    readContractByFunctionName<number>('winningProposalID').then(
-        id => setWinningProposalID(id)
-    ).catch(err => console.log(err.message))
-  }
+  const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
 
   useEffect(() => {
-    if (isConnected) {
-      getOwner()
-      getWinningProposalID()
-    }
-  }, [address, isConnected])
+    getWorkflowStatus().then(
+      id => setWorkflowStatus(id)
+    ).catch(err => console.log(err))
+  }, [workflowStatus])
 
   return (
     <IsConnected asOwner={true}>
-      <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-        <div className="p-4">
-          <ul className="list-inside list-disc">
-            <li>{owner} (Contract's owner)</li>
-            <li>{address} (Account address)</li>
-          </ul>
-        </div>
-      </div>
-
-      {winningProposalID &&
-        <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-          <div className="p-4">
-            winningProposalID : {winningProposalID}
-          </div>
-        </div>
-      }
       <WorkflowManager />
+
+      {WorkflowStatus[workflowStatus] === votesTalliedStatus && <WinningProposal />}
+      {WorkflowStatus[workflowStatus] === registeringVotersStatus && <VoterManager />}
     </IsConnected>
   )
 }
