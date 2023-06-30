@@ -6,18 +6,20 @@ import { readContractByFunctionName } from "@/utils"
 import { useToast } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { Proposal } from "@/interfaces/Proposal"
+import {useAccount} from "wagmi";
 
 const WinningProposal = () => {
+    const { address } = useAccount()
     const [winningProposalID, setWinningProposalID] = useState<number | null>(null)
     const [proposal, setProposal] = useState<Proposal>()
     const toast = useToast()
 
     const getWinningProposal = async () => {
-        readContractByFunctionName<number>('winningProposalID').then(
+        readContractByFunctionName<number>('winningProposalID', address as `0x${string}`).then(
             id => {
                 setWinningProposalID(Number(id))
 
-                readContractByFunctionName<Proposal>('getOneProposal', id).then(
+                readContractByFunctionName<Proposal>('getOneProposal', address as `0x${string}`, id).then(
                     proposal => setProposal(proposal)
                 ).catch(
                     err => toast({

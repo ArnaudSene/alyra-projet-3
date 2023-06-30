@@ -4,8 +4,10 @@ import { useState } from "react";
 import { readContractByFunctionName } from "@/utils";
 import { Voter } from "@/interfaces/Voter";
 import {useToast} from "@chakra-ui/react";
+import {useAccount} from "wagmi";
 
 const GetVoter = () => {
+    const { address } = useAccount()
     const validAddress = new RegExp("^0x[a-fA-F0-9]{40}$")
     const [voterAddress, setVoterAddress] = useState('')
     const [voter, setVoter] = useState<Voter>()
@@ -21,7 +23,7 @@ const GetVoter = () => {
                 isClosable: true,
             })
         } else {
-            readContractByFunctionName<Voter>('getVoter', voterAddress).then(
+            readContractByFunctionName<Voter>('getVoter', address as `0x${string}`, voterAddress).then(
                 voter => setVoter(voter)
             ).catch(
                 err => toast({

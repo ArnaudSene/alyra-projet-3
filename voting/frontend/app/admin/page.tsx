@@ -9,12 +9,14 @@ import { WorkflowStatus, registeringVotersStatus, votesTalliedStatus } from "@/c
 import { useWorkflowStatusContext } from "@/context/workflowStatus"
 import { getWorkflowStatus } from "@/utils"
 import { useEffect } from "react"
+import {useAccount} from "wagmi";
 
 const Admin = () => {
+  const { address } = useAccount()
   const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
 
   useEffect(() => {
-    getWorkflowStatus().then(
+    getWorkflowStatus(address as `0x${string}`).then(
       id => setWorkflowStatus(id)
     ).catch(err => console.log(err))
   }, [workflowStatus])
