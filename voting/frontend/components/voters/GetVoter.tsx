@@ -12,7 +12,6 @@ const GetVoter = () => {
     const toast = useToast()
 
     const getVoter = async () => {
-
         if (!validAddress.test(voterAddress)) {
             toast({
                 title: 'Invalid ethereum address.',

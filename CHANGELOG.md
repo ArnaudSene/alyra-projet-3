@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.0 (2023-06-30)
+
+### feat: Refactoring + Implement Send vote
+
+- Add Proposal interface
+- Refactor the ProposalManager in SendProposal and SendVote
+- Implement SendVote
+- Refactor admin page with new WinningProposal component
+- Refactor WorkflowManager
+- Fix the refresh of WorkflowStatus
+
+---
+
 ## 0.11.0 (2023-06-29)
 
 ### style: chakra-ui toast + css update
