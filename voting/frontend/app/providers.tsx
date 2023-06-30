@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import {connectorsForWallets, getDefaultWallets, RainbowKitProvider,} from '@rainbow-me/rainbowkit';
+import {connectorsForWallets, darkTheme, getDefaultWallets, RainbowKitProvider,} from '@rainbow-me/rainbowkit';
 import {argentWallet, ledgerWallet, trustWallet,} from '@rainbow-me/rainbowkit/wallets';
 import {configureChains, createConfig, WagmiConfig} from 'wagmi';
 import {hardhat, sepolia} from 'wagmi/chains';
@@ -53,12 +53,16 @@ export function Providers({ children }: { children: React.ReactNode }) {
     React.useEffect(() => setMounted(true), []);
     return (
         <WagmiConfig config={wagmiConfig}>
-            <RainbowKitProvider chains={chains} appInfo={demoAppInfo}>
+            <RainbowKitProvider
+                chains={chains}
+                appInfo={demoAppInfo}
+                theme={darkTheme({
+                    borderRadius: 'medium',
+                })}>
                 <ChakraProvider>
                     {mounted && children}
                 </ChakraProvider>
             </RainbowKitProvider>
         </WagmiConfig>
-
     );
 }

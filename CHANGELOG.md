@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.11.0 (2023-06-29)
+
+### style: chakra-ui toast + css update
+
+- Use chakra-ui toast component for success/error info
+- Update RainbowKit style
+- Update CSS style
+
+---
+
 ## 0.10.0 (2023-06-29)
 
 ### feat: Manage past event logs

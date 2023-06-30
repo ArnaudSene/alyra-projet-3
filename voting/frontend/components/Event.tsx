@@ -20,8 +20,11 @@ const Event = ({ name }: { name: string }) => {
     return (
         <>
             {logs && logs.length > 0 &&
-                <div className="mx-auto w-3/4 p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
-                    <div className="font-bold text-lg text-center">Last {name} log</div>
+                <div role="alert"
+                    className="mx-auto w-3/4 p-4 mb-4 text-sm rounded h-auto bg-gradient-to-r from-indigo-100 to-indigo-200 text-gray-900 shadow-lg drop-shadow-lg border-indigo-600 border"
+                >
+                    <div className="p-4 font-bold text-lg text-center">Last {name} log</div>
+
                     <ul>
                         <li className="pb-1">Address: {logs[0].address}</li>
                         <li className="pb-1">BlockHash: {logs[0].blockHash}</li>
