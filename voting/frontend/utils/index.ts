@@ -11,30 +11,31 @@ export const client = createPublicClient({
 })
 
 export const userIsOwner = async (address: `0x${string}`): Promise<boolean> => {
-    return readContractByFunctionName<`0x${string}`>('owner').then(
+    return readContractByFunctionName<`0x${string}`>('owner', address).then(
         hash => hash === address
     ).catch(() => false)
 }
 
 export const userIsVoter = async (address: `0x${string}`): Promise<boolean> => {
-    return readContractByFunctionName<Voter>('getVoter', address).then(
+    return readContractByFunctionName<Voter>('getVoter', address, address).then(
         data => data && data.isRegistered
     ).catch(() => false)
 }
 
-export const readContractByFunctionName = async <T>(functionName: string, ...args: `0x${string}`[]|string[]): Promise<T> => {
+export const readContractByFunctionName = async <T>(functionName: string, address: `0x${string}`, ...args: `0x${string}`[]|string[]): Promise<T> => {
     try {
         const data: Promise<T>|unknown = await readContract({
             address: contractAddress,
             abi: abi,
             functionName: functionName,
+            account: address,
             args: args
         })
 
         return data as T
-      } catch (err) {
+    } catch (err) {
         throw formattedError(err)
-      }
+    }
 }
 
 export const writeContractByFunctionName = async (functionName: string, ...args: `0x${string}`[]|string[]): Promise<`0x${string}`> => {

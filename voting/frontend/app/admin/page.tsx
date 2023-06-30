@@ -15,7 +15,7 @@ const Admin = () => {
   const [isOwner, setIsOwner] = useState(false)
 
   const getOwner = async () => {
-    readContractByFunctionName<`0x${string}`>('owner').then(
+    readContractByFunctionName<`0x${string}`>('owner', address as `0x${string}`).then(
       hash => {
         if (hash !== address) push('/')
         setOwner(hash)
@@ -24,7 +24,7 @@ const Admin = () => {
   }
 
   const getWinningProposalID = async () => {
-    readContractByFunctionName<number>('winningProposalID').then(
+    readContractByFunctionName<number>('winningProposalID', address as `0x${string}`).then(
         id => setWinningProposalID(id)
     ).catch(
         err => console.log(err.message)
@@ -43,18 +43,21 @@ const Admin = () => {
       <IsConnected>
         {isOwner ? (
           <>
-            {/*<div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">*/}
-            {/*  <div className="p-4">*/}
-            {/*    <p>owner : {owner}</p>*/}
-            {/*    <p>address: {address}</p>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
+            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
+              <div className="p-4">
+                <ul className="list-inside list-disc">
+                  <li>{owner} (Contract's owner)</li>
+                  <li>{address} (Account address)</li>
+                </ul>
 
-            {/*<div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">*/}
-            {/*  <div className="p-4">*/}
-            {/*    winningProposalID : {winningProposalID}*/}
-            {/*  </div>*/}
-            {/*</div>*/}
+              </div>
+            </div>
+
+            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
+              <div className="p-4">
+                winningProposalID : {winningProposalID}
+              </div>
+            </div>
 
             <WorkflowManager />
           </>
