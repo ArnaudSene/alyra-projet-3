@@ -1,4 +1,7 @@
-export const contractAddress  = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}` as `0x${string}`
+export const contractAddress = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}` as `0x${string}`
+export const genesisBlock = `${process.env.NEXT_PUBLIC_GENESIS_BLOCK}`
+export const network = `${process.env.NEXT_PUBLIC_NETWORK}`
+
 export const VoterRegistered = 'event VoterRegistered(address voterAddress)'
 
 export const registeringVotersStatus = 'RegisteringVoters'
