@@ -1,12 +1,12 @@
-import { abi, contractAddress } from "@/constants"
-import { Voter } from "@/interfaces/Voter"
+import {abi, contractAddress, ProposalsRegistered} from "@/constants"
+import {Proposal, Voter} from "@/interfaces/Voter"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
-import { BaseError, ContractFunctionRevertedError, createPublicClient, http } from "viem"
-import { hardhat } from "viem/chains"
+import {BaseError, ContractFunctionRevertedError, createPublicClient, http, parseAbiItem} from "viem"
+import { hardhat, sepolia } from "viem/chains"
 
 
 export const client = createPublicClient({
-    chain: hardhat,
+    chain: process.env.NEXT_PUBLIC_ENABLE_TESTNETS ? hardhat : sepolia,
     transport: http()
 })
 
@@ -22,7 +22,15 @@ export const userIsVoter = async (address: `0x${string}`): Promise<boolean> => {
     ).catch(() => false)
 }
 
-export const readContractByFunctionName = async <T>(functionName: string, address: `0x${string}`, ...args: `0x${string}`[]|string[]): Promise<T> => {
+export const GetProposals = async (address: `0x${string}`, logId: number): Promise<Proposal> => {
+    return readContractByFunctionName<Proposal>('getOneProposal', address, logId).then(
+        proposal => proposal
+    ).catch(
+        err => console.log(err.message)
+    )
+}
+
+export const readContractByFunctionName = async <T>(functionName: string, address: `0x${string}`, ...args: `0x${string}`[]|string[]|number[]): Promise<T> => {
     try {
         const data: Promise<T>|unknown = await readContract({
             address: contractAddress,
@@ -54,6 +62,23 @@ export const writeContractByFunctionName = async (functionName: string, ...args:
         throw formattedError(err)
     }
 }
+
+export const getContractEvents = async () => {
+    try {
+        const logs = await client.getLogs({
+            address: contractAddress,
+            event: parseAbiItem(ProposalsRegistered),
+            fromBlock: 0n,
+            toBlock: 'latest'
+        })
+        console.log("getLogs => " + logs)
+        return logs
+
+    } catch (err) {
+        throw formattedError(err)
+    }
+}
+
 
 const formattedError = (err: any) => {
     if (err instanceof BaseError) {

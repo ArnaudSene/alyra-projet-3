@@ -6,9 +6,10 @@ import {useWorkflowStatusContext} from "@/context/workflowStatus";
 import VoterManager from "@/components/admin/VoterManager";
 import Event from "@/components/Event";
 import {useToast} from "@chakra-ui/react";
+import {useAccount} from "wagmi";
 
 const WorkflowManager = () => {
-    // const [error, setError] = useState('')
+    const { address, isConnected } = useAccount()
     const [success, setSuccess] = useState('')
     const { workflowStatus, setWorkflowStatus} = useWorkflowStatusContext()
     const toast = useToast()
@@ -52,7 +53,7 @@ const WorkflowManager = () => {
     }
 
     const getWorkflowStatus = async () => {
-        readContractByFunctionName<number>('workflowStatus').then(
+        readContractByFunctionName<number>('workflowStatus', address as `0x${string}`).then(
             id => setWorkflowStatus(id)
         ).catch(
             err => console.log(err.message)

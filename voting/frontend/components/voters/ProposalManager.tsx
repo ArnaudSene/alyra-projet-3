@@ -3,6 +3,7 @@
 import { writeContractByFunctionName } from "@/utils"
 import { useState } from "react"
 import {useToast} from "@chakra-ui/react";
+import ProposalEvents from "@/components/voters/ProposalEvents";
 
 const ProposalManager = () => {
     const [proposal, setProposal] = useState('')
@@ -62,6 +63,8 @@ const ProposalManager = () => {
                     >
                         Send Proposal
                     </button>
+
+
                 </div>
             </form>
         </section>

@@ -8,6 +8,7 @@ import { userIsVoter } from "@/utils";
 import { useRouter } from 'next/navigation';
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
+import ProposalEvents from "@/components/voters/ProposalEvents";
 
 export default function Voters() {
   const { address, isConnected } = useAccount()
@@ -24,6 +25,7 @@ export default function Voters() {
         <IsConnected>
             <GetVoter />
             <ProposalManager />
+            <ProposalEvents/>
             <Event name='ProposalRegistered'></Event>
         </IsConnected>
       </>
