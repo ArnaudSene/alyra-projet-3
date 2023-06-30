@@ -20,10 +20,12 @@ export default function Voters() {
   }, [address, isConnected])
 
   return (
-    <IsConnected>
-      <Event name='ProposalRegistered'></Event>
-      <GetVoter />
-      <ProposalManager />
-    </IsConnected>
+      <>
+        <IsConnected>
+            <Event name='ProposalRegistered'></Event>
+                <GetVoter />
+            <ProposalManager />
+        </IsConnected>
+      </>
   )
 }

@@ -14,7 +14,6 @@ const Admin = () => {
   const [winningProposalID, setWinningProposalID] = useState<number|null>(null)
   const [isOwner, setIsOwner] = useState(false)
 
-
   const getOwner = async () => {
     readContractByFunctionName<`0x${string}`>('owner').then(
       hash => {
@@ -44,18 +43,18 @@ const Admin = () => {
       <IsConnected>
         {isOwner ? (
           <>
-            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-              <div className="p-4">
-                <p>owner : {owner}</p>
-                <p>address: {address}</p>
-              </div>
-            </div>
+            {/*<div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">*/}
+            {/*  <div className="p-4">*/}
+            {/*    <p>owner : {owner}</p>*/}
+            {/*    <p>address: {address}</p>*/}
+            {/*  </div>*/}
+            {/*</div>*/}
 
-            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-              <div className="p-4">
-                winningProposalID : {winningProposalID}
-              </div>
-            </div>
+            {/*<div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">*/}
+            {/*  <div className="p-4">*/}
+            {/*    winningProposalID : {winningProposalID}*/}
+            {/*  </div>*/}
+            {/*</div>*/}
 
             <WorkflowManager />
           </>

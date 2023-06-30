@@ -3,16 +3,16 @@
 import { useEffect, useState } from "react";
 import { client, writeContractByFunctionName } from "@/utils"
 import { parseAbiItem } from "viem";
-import { ListItem, UnorderedList } from "@chakra-ui/react";
+import {ListItem, UnorderedList, useToast} from "@chakra-ui/react";
 import { VoterRegistered } from "@/constants";
 
 const VoterManager = () => {
     const validAddress = new RegExp("^0x[a-fA-F0-9]{40}$")
 
     const [newVoter, setNewVoter] = useState('')
-    const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
     const [depositEvents, setDepositEvents] = useState<`0x${string}`[]>([])
+    const toast = useToast()
 
     const getEvents = async () => {
         const depositLogs = await client.getLogs({
@@ -23,16 +23,36 @@ const VoterManager = () => {
     }
 
     const addVoter = async () => {
-        setError('')
         setSuccess('')
 
         if (!validAddress.test(newVoter)) {
-            setError('Invalid etherum address');
+            toast({
+                title: 'Invalid ethereum address.',
+                description: `address ${newVoter}.`,
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            })
         } else {
             writeContractByFunctionName('addVoter', newVoter).then(
-                hash => setSuccess(hash)
+                hash => {
+                    setSuccess(hash)
+                    toast({
+                        title: 'Voter added.',
+                        description: `address ${newVoter}.`,
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                    })
+                }
             ).catch(
-                err => setError(err.message)
+                err => toast({
+                        title: err.message,
+                        description: `address ${newVoter}.`,
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                    })
             )
         }
     }
@@ -43,24 +63,29 @@ const VoterManager = () => {
     }, [success])
 
     return (
-        <section className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
+        <section className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
             <div className="flex justify-between p-3">
                 <div className="m-auto w-3/4">
-                    <input type="text" onChange={e => setNewVoter(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-700 block w-full p-2" placeholder="Voter address" />
+                    <input
+                        type="text"
+                        onChange={e => setNewVoter(e.target.value)}
+                        className="bg-indigo-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-900 block w-full p-2"
+                        placeholder="Voter address"
+                    />
                 </div>
 
                 <div className="m-auto w-1/4 text-center">
-                    <button onClick={() => addVoter()} className="content-center bg-indigo-950 hover:bg-indigo-900 text-white font-semibold py-2 px-4 rounded-full">
+                    <button onClick={
+                        () => addVoter()}
+                            className="content-center bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg"
+                    >
                         Add Voter
                     </button>
                 </div>
             </div>
 
-            {success && <div className="text-green-600 font-semibold p-4 text-center">Voter added with success ! Transaction: {success}</div>}
-            {error && <div className="text-red-600 font-semibold p-4 text-center">{error}</div>}
-
             <div className="m-auto w-3/4">
-                <h3 className="font-bold text-lg text-center mb-3">Voter's Address Registered</h3>
+                <h3 className="font-bold text-md text-center mb-3">Voter's Address Registered</h3>
 
                 <UnorderedList>
                     {depositEvents.map((voter, i) => <ListItem key={i}>{voter}</ListItem>)}

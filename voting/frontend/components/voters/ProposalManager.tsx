@@ -2,32 +2,53 @@
 
 import { writeContractByFunctionName } from "@/utils"
 import { useState } from "react"
+import {useToast} from "@chakra-ui/react";
 
 const ProposalManager = () => {
     const [proposal, setProposal] = useState('')
-    const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
+    const toast = useToast()
 
     const submitProposal = () => {
-        setError('')
         setSuccess('')
 
         if (proposal.trim().length <= 0) {
-            setError('Proposal can\'t be empty')
+            toast({
+                title: 'Invalid proposal.',
+                description: 'Proposal can\'t be empty',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            })
         } else {
             writeContractByFunctionName('addProposal', proposal).then(
-                hash => setSuccess(hash)
+                hash => {
+                    setSuccess(hash)
+                    toast({
+                        title: 'Proposal successfully added.',
+                        description: `proposal: ${proposal}.`,
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                    })
+                }
             ).catch(
-                err => setError(err.message)
+                err => toast({
+                    title: 'Unknown error',
+                    description: err.message,
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                })
             )
         }
     }
 
     return (
-        <section className="m-auto mt-2 w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-            <form className="w-full max-w-sm m-auto p-3">
-                <div className="flex items-center border-b border-indigo-400 py-2">
-                    <textarea className="appearance-none bg-transparent border-none w-full text-gray-50 mr-3 py-1 px-2 leading-tight focus:outline-none"
+        <section className="m-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
+            <form className="w-full m-auto p-3 pr-3">
+                <div className="flex items-center border-b border-indigo-300 py-2">
+                    <textarea className="w-full mr-3 p-2 leading-tight focus:outline-none bg-indigo-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-900"
                         name="proposal"
                         required
                         placeholder="Describe you're proposal..."
@@ -35,7 +56,7 @@ const ProposalManager = () => {
                         onChange={e => setProposal(e.target.value)}
                     />
 
-                    <button className="flex-shrink-0 bg-indigo-950 hover:bg-indigo-900 font-semibold border border-indigo-400 text-white py-1 px-2 rounded"
+                    <button className="content-center bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg"
                         type="button"
                         onClick={() => submitProposal()}
                     >
@@ -43,9 +64,6 @@ const ProposalManager = () => {
                     </button>
                 </div>
             </form>
-
-            {success && <div className="text-green-600 font-semibold p-4 text-center">Proposal added with success ! Transaction: {success}</div>}
-            {error && <div className="text-red-600 font-semibold p-4 text-center">{error}</div>}
         </section>
     );
 }
