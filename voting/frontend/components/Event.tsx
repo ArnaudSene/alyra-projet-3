@@ -20,9 +20,7 @@ const Event = ({ name }: { name: string }) => {
     return (
         <>
             {logs && logs.length > 0 &&
-                <div role="alert"
-                    className="mx-auto w-3/4 p-4 mb-4 text-sm rounded h-auto bg-gradient-to-r from-indigo-100 to-indigo-200 text-gray-900 shadow-lg drop-shadow-lg border-indigo-600 border"
-                >
+                <div role="alert" className="mx-auto w-3/4 p-4 mb-4 text-sm rounded h-auto bg-gradient-to-r from-indigo-100 to-indigo-200 text-gray-900 shadow-lg drop-shadow-lg border-indigo-600 border">
                     <div className="p-4 font-bold text-lg text-center">Last {name} log</div>
 
                     <ul>

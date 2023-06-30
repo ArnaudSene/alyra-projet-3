@@ -6,12 +6,9 @@ import {useToast} from "@chakra-ui/react";
 
 const ProposalManager = () => {
     const [proposal, setProposal] = useState('')
-    const [success, setSuccess] = useState('')
     const toast = useToast()
 
     const submitProposal = () => {
-        setSuccess('')
-
         if (proposal.trim().length <= 0) {
             toast({
                 title: 'Invalid proposal.',
@@ -22,16 +19,13 @@ const ProposalManager = () => {
             })
         } else {
             writeContractByFunctionName('addProposal', proposal).then(
-                hash => {
-                    setSuccess(hash)
-                    toast({
-                        title: 'Proposal successfully added.',
-                        description: `proposal: ${proposal}.`,
-                        status: 'success',
-                        duration: 5000,
-                        isClosable: true,
-                    })
-                }
+                () => toast({
+                    title: 'Proposal successfully added.',
+                    description: `proposal: ${proposal}.`,
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                })
             ).catch(
                 err => toast({
                     title: 'Unknown error',

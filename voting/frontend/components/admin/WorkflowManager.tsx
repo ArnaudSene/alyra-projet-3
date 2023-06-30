@@ -8,7 +8,6 @@ import Event from "@/components/Event";
 import {useToast} from "@chakra-ui/react";
 
 const WorkflowManager = () => {
-    // const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
     const { workflowStatus, setWorkflowStatus} = useWorkflowStatusContext()
     const toast = useToast()
@@ -61,7 +60,7 @@ const WorkflowManager = () => {
 
     return (
         <>
-            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
+            <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
                 <div className="p-4 font-bold text-md">
                     WorkflowStatus : {WorkflowStatus[workflowStatus]}
                 </div>
@@ -71,7 +70,7 @@ const WorkflowManager = () => {
 
             {WorkflowStatus[workflowStatus] !== "VotesTallied" &&
 
-                <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
+                <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
                     <div className="p-4">
 
                         {WorkflowStatus[workflowStatus] === "RegisteringVoters" &&

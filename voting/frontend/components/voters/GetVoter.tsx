@@ -52,7 +52,8 @@ const GetVoter = () => {
                     <button
                         onClick={() => getVoter()}
                         className="bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg"
-                    >Get Voter
+                    >
+                        Get Voter
                     </button>
                 </div>
             </div>
