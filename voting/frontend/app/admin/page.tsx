@@ -10,6 +10,8 @@ import { useWorkflowStatusContext } from "@/context/workflowStatus"
 import { getWorkflowStatus } from "@/utils"
 import { useEffect } from "react"
 import {useAccount} from "wagmi";
+import Event from "@/components/Event";
+import {WorkflowStepperManager} from "@/components/home/WorkflowStepperManager";
 
 const Admin = () => {
   const { address } = useAccount()
@@ -23,10 +25,20 @@ const Admin = () => {
 
   return (
     <IsConnected asOwner={true}>
-      <WorkflowManager />
+        <WorkflowStepperManager />
+        <WorkflowManager />
 
-      {WorkflowStatus[workflowStatus] === votesTalliedStatus && <WinningProposal />}
-      {WorkflowStatus[workflowStatus] === registeringVotersStatus && <VoterManager />}
+        <div className="mx-auto w-3/4">
+            {WorkflowStatus[workflowStatus] === votesTalliedStatus && <WinningProposal />}
+        </div>
+
+        {WorkflowStatus[workflowStatus] === registeringVotersStatus && <VoterManager />}
+
+        <div className="mt-2">
+            <Event name='VoterRegistered'></Event>
+            <Event name='WorkflowStatusChange'></Event>
+        </div>
+
     </IsConnected>
   )
 }

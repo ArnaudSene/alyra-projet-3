@@ -14,6 +14,7 @@ const GetVoter = () => {
     const toast = useToast()
 
     const getVoter = async () => {
+
         if (!validAddress.test(voterAddress)) {
             toast({
                 title: 'Invalid ethereum address.',
@@ -35,6 +36,7 @@ const GetVoter = () => {
                 })
             )
         }
+        setVoterAddress("")
     }
 
     return (
@@ -44,6 +46,7 @@ const GetVoter = () => {
                     <input
                         type="text"
                         onChange={e => setVoterAddress(e.target.value)}
+                        value={voterAddress}
                         className="bg-indigo-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-900 block w-full p-2"
                         placeholder="Voter address"
                     />

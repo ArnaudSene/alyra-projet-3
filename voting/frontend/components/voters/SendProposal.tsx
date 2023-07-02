@@ -3,11 +3,17 @@
 import { writeContractByFunctionName } from "@/utils"
 import { useState } from "react"
 import { useToast } from "@chakra-ui/react"
-import Event from "../Event"
+import { useContractEvent } from "wagmi";
+import { abi, contractAddress } from "@/constants";
+import { Log } from "viem";
+import GetProposalsList from "@/components/voters/GetProposalsList";
 
 const SendProposal = () => {
+
     const [proposal, setProposal] = useState('')
     const toast = useToast()
+    const [logs, setLogs] = useState<Log[]>()
+    const [ newProposal, setNewProposal] = useState(false)
 
     const submitProposal = () => {
         if (proposal.trim().length <= 0) {
@@ -20,13 +26,16 @@ const SendProposal = () => {
             })
         } else {
             writeContractByFunctionName('addProposal', proposal).then(
-                () => toast({
-                    title: 'Proposal successfully added.',
-                    description: `proposal: ${proposal}.`,
-                    status: 'success',
-                    duration: 5000,
-                    isClosable: true,
-                })
+                () => {
+                    setNewProposal(true)
+                    toast({
+                        title: 'Proposal successfully added.',
+                        description: `proposal: ${proposal}.`,
+                        status: 'success',
+                        duration: 5000,
+                        isClosable: true,
+                    })
+                }
             ).catch(
                 err => toast({
                     title: 'Unknown error',
@@ -35,11 +44,26 @@ const SendProposal = () => {
                     duration: 5000,
                     isClosable: true,
                 })
-            )
+            ).finally(() => {
+                setProposal("")
+
+            })
         }
     }
 
+    useContractEvent({
+        address: contractAddress,
+        abi: abi,
+        eventName: 'ProposalRegistered',
+        listener(log) {
+            setLogs(log)
+            setNewProposal(false)
+        }
+    })
+
+
     return (<>
+
         <section className="m-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
             <h2 className="font-bold text-lg text-center mb-3">Send a Proposal</h2>
             <form className="w-full m-auto p-3 pr-3">
@@ -60,9 +84,9 @@ const SendProposal = () => {
                     </button>
                 </div>
             </form>
-        </section>
+            <GetProposalsList addNewProposal={newProposal}/>
 
-        <Event name='ProposalRegistered'></Event>
+        </section>
     </>);
 }
 export default SendProposal;

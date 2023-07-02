@@ -1,7 +1,6 @@
 "use client"
 
 import IsConnected from "@/components/IsConnected"
-
 import { readContractByFunctionName } from "@/utils"
 import { useToast } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
@@ -19,17 +18,17 @@ const WinningProposal = () => {
             id => {
                 setWinningProposalID(Number(id))
 
-                readContractByFunctionName<Proposal>('getOneProposal', address as `0x${string}`, id).then(
-                    proposal => setProposal(proposal)
-                ).catch(
-                    err => toast({
-                        title: 'Unable getting proposal',
-                        description: err.message,
-                        status: 'error',
-                        duration: 5000,
-                        isClosable: true,
-                    })
-                )
+                // readContractByFunctionName<Proposal>('getOneProposal', address as `0x${string}`, id).then(
+                //     proposal => setProposal(proposal)
+                // ).catch(
+                //     err => toast({
+                //         title: 'Unable getting proposal',
+                //         description: err.message,
+                //         status: 'error',
+                //         duration: 5000,
+                //         isClosable: true,
+                //     })
+                // )
             }
         ).catch(err => console.log(err.message))
     }
@@ -40,12 +39,15 @@ const WinningProposal = () => {
 
     return (winningProposalID !== null ?
         <IsConnected>
-            <div className="mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg p-5">
-                <h2 className="font-bold text-lg text-center mb-3">Winning Proposal</h2>
+            <div className="mx-auto w-full mt-2 p-5 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
+                <h2 className="py-3 font-bold text-lg text-center border-b border-indigo-300">Winning Proposal</h2>
 
-                <p>Proposal id: <span className="font-semibold">{winningProposalID}</span></p>
-                <p>Number of vote: <span className="font-semibold text-yellow-500">{proposal ? Number(proposal?.voteCount): 'NaN'}</span></p>
-                <p>Description: {proposal?.description}</p>
+                <div className={"pt-2 text-center text-lg"}>
+                    {/*<p>Proposal id: <span className="font-semibold">{winningProposalID}</span></p>*/}
+                    <p>Number of vote: <span className="font-semibold text-rose-300">{proposal ? Number(proposal?.voteCount): 'NaN'}</span></p>
+                    <p>Description: {proposal?.description}</p>
+                </div>
+
             </div>
         </IsConnected>
     : <></>)

@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.14.1] (2023-07-02)
+
+### fix: Chakra bug with attributes in Stepper + Context Proposal 
+
+- Chakra bug with attributes in Stepper
+  - gap & _horizontal unrecognized 
+- Add a context for proposals. It aims to select a proposal to be submit for vote 
+
+---
+
+## [0.14.0] (2023-07-02)
+
+### feat: Stepper/ListProposals/SendVote...
+
+- Add a stepper to follow the workflow status
+- Add list of proposal and select to submit a vote
+- Remove the text inside an input after submit
+- Fix some minors issues
+
+---
+
 ## 0.13.0 (2023-06-30)
 
 ### fix: Add Loader component + fix on sepolia

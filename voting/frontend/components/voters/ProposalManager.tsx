@@ -1,13 +1,12 @@
 "use client"
 
-import { WorkflowStatus, proposalsRegistrationStartedStatus, votingSessionStartedStatus } from "@/constants"
+import {WorkflowStatus, proposalsRegistrationStartedStatus, votingSessionStartedStatus} from "@/constants"
 import { useWorkflowStatusContext } from "@/context/workflowStatus"
-
-import SendVote from "./SendVote"
 import SendProposal from "./SendProposal"
-import { useEffect } from "react"
-import { getWorkflowStatus } from "@/utils"
+import {useEffect} from "react"
+import {getWorkflowStatus} from "@/utils"
 import {useAccount} from "wagmi";
+import SendVote from "@/components/voters/SendVote";
 
 const ProposalManager = () => {
     const { address } = useAccount()

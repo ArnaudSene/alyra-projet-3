@@ -16,8 +16,7 @@ const Headers = () => {
             userIsVoter(address as `0x${string}`)
                 .then(isVoter => setIsVoter(isVoter))
                 .catch(() => setIsVoter(false))
-            
-                
+
             userIsOwner(address as `0x${string}`)
                 .then(isOwner => setIsOwner(isOwner))
                 .catch(() => setIsOwner(false))

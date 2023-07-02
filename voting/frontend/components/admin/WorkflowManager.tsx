@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { getWorkflowStatus, writeContractByFunctionName } from "@/utils";
 import { useWorkflowStatusContext } from "@/context/workflowStatus";
-import Event from "@/components/Event";
 import { useToast } from "@chakra-ui/react";
 import { WorkflowStatus, abi, contractAddress, proposalsRegistrationEndedStatus, proposalsRegistrationStartedStatus, registeringVotersStatus, votesTalliedStatus, votingSessionEndedStatus, votingSessionStartedStatus } from "@/constants";
 import { useContractEvent } from "wagmi";
@@ -14,7 +13,6 @@ import {useAccount} from "wagmi";
 const WorkflowManager = () => {
     const [logs, setLogs] = useState<Log[]>()
     const [loading, setLoading] = useState(true)
-
     const { address } = useAccount()
     const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
     const toast = useToast()
@@ -76,19 +74,18 @@ const WorkflowManager = () => {
         <Loader isLoading={loading}>
             <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
                 <div className="p-4 font-bold text-md">
-                    WorkflowStatus : {WorkflowStatus[workflowStatus]}
+                    Workflow Status : {WorkflowStatus[workflowStatus]}
                 </div>
             </div>
 
             {WorkflowStatus[workflowStatus] !== votesTalliedStatus &&
-                <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border p-4">
+                <div className="mt-2 p-4 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border ">
                     <button onClick={() => nextWorkflowStatus()} className="bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg">
                         Next Step: {WorkflowStatus[workflowStatus + 1]}
                     </button>
                 </div>
             }
 
-            <Event name='WorkflowStatusChange'></Event>
         </Loader>
     )
 }
