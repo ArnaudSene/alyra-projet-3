@@ -14,6 +14,7 @@ import {useWorkflowStatusContext} from "@/context/workflowStatus";
 import {WorkflowStatusStepper, WorkflowStepper} from "@/constants";
 import {getWorkflowStatus} from "@/utils";
 import {useAccount} from "wagmi";
+import {TitleHeader} from "@/components/TitleHeader";
 
 export const WorkflowStepperManager = () => {
     const { address } = useAccount()
@@ -35,11 +36,7 @@ export const WorkflowStepperManager = () => {
 
     return (
         <div className="pb-10">
-            <div className="mb-8">
-                <h1 className="text-center text-6xl">
-                    <span className="font-bold text-6xl">Alyra  </span>
-                    <span className="text-rose-500">myVote</span></h1>
-            </div>
+            <TitleHeader/>
 
             <Stack>
                 <Stepper size='md' colorScheme='purple' index={activeStep} gap='0'>
