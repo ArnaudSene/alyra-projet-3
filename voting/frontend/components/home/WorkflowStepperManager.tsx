@@ -44,7 +44,7 @@ export const WorkflowStepperManager = () => {
             <Stack>
                 <Stepper size='md' colorScheme='purple' index={activeStep} gap='0'>
                     {steps.map((step, index) => (
-                        <Step key={index} gap='0'>
+                        <Step key={index}>
                             <StepIndicator>
                                 <StepStatus
                                     complete={<StepIcon />}
@@ -53,7 +53,7 @@ export const WorkflowStepperManager = () => {
                                 />
 
                             </StepIndicator>
-                            <StepSeparator _horizontal={{ ml: '0' }} />
+                            <StepSeparator />
                         </Step>
                     ))}
                 </Stepper>

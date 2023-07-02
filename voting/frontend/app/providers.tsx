@@ -8,6 +8,7 @@ import {hardhat, sepolia} from 'wagmi/chains';
 import {publicProvider} from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
 import { WorkflowStatusContextProvider } from '@/context/workflowStatus';
+import {SelectProposalContextProvider} from "@/context/SelectProposal";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
     [
@@ -62,7 +63,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 })}>
                 <ChakraProvider>
                     <WorkflowStatusContextProvider>
-                        {mounted && children}
+                        <SelectProposalContextProvider>
+                            {mounted && children}
+                        </SelectProposalContextProvider>
+
                     </WorkflowStatusContextProvider>
                 </ChakraProvider>
             </RainbowKitProvider>

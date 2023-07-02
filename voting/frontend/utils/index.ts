@@ -1,9 +1,9 @@
-import { abi, contractAddress, network, ProposalsRegistered } from "@/constants"
+import { abi, contractAddress, genesisBlock, network, ProposalsRegistered} from "@/constants"
 import { Voter } from "@/interfaces/Voter"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
 import { BaseError, ContractFunctionRevertedError, createPublicClient, http, parseAbiItem } from "viem"
 import { hardhat, sepolia } from "viem/chains"
-import {Proposal} from "@/interfaces/Proposal";
+import { Proposal } from "@/interfaces/Proposal";
 
 export const getWorkflowStatus = async (address: `0x${string}`): Promise<number> => {
     return readContractByFunctionName<number>('workflowStatus', address )
@@ -75,15 +75,12 @@ export const writeContractByFunctionName = async (functionName: string, ...args:
 
 export const getContractEvents = async () => {
     try {
-        const logs = await client.getLogs({
+        return await client.getLogs({
             address: contractAddress,
             event: parseAbiItem(ProposalsRegistered),
-            fromBlock: 0n,
+            fromBlock: BigInt(genesisBlock),
             toBlock: 'latest'
         })
-        console.log("event ProposalsRegistered result => " + logs.length)
-        return logs
-
     } catch (err) {
         throw formattedError(err)
     }

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.14.1] (2023-07-02)
+
+### fix: Chakra bug with attributes in Stepper + Context Proposal 
+
+- Chakra bug with attributes in Stepper
+  - gap & _horizontal unrecognized 
+- Add a context for proposals. It aims to select a proposal to be submit for vote 
+
+---
+
 ## [0.14.0] (2023-07-02)
 
 ### feat: Stepper/ListProposals/SendVote...
