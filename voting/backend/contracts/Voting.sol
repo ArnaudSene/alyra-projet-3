@@ -18,7 +18,7 @@ contract Voting is Ownable {
     /**
      * @notice Winning proposal id
      */
-    uint public winningProposalID;
+    uint private winningProposalID;
 
     /// @dev A structure that define a voter
     struct Voter {
@@ -102,6 +102,18 @@ contract Voting is Ownable {
      * @return Proposal The Proposal
      */
     function getOneProposal(uint _id) external onlyVoters view returns (Proposal memory) {
+        return proposalsArray[_id];
+    }
+
+    /**
+ * @notice Get the winning proposal by his id
+     * Only when workflow status is VotesTallied
+     *
+     * @param _id The Proposal id
+     * @return Proposal The Proposal
+     */
+    function getWinningProposal(uint _id) external view returns (Proposal memory) {
+        require(workflowStatus == WorkflowStatus.VotesTallied, 'Unavailable with current status!');
         return proposalsArray[_id];
     }
 

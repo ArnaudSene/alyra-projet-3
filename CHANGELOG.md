@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.16.0] (2023-07-02)
+
+### feat: Update smart contrat for winningProposal
+
+- Add `getWinningProposal`, a new public method to get the winning proposal 
+- Restricted to status as `VotesTallied`
+- Update the `winningProposalID` variable to private
+
+---
+
 ## [0.15.0] (2023-07-02)
 
 ### feat: Refacto home page
