@@ -1,12 +1,23 @@
-import {abi, contractAddress, ProposalsRegistered} from "@/constants"
-import {Proposal, Voter} from "@/interfaces/Voter"
+import { abi, contractAddress, network, ProposalsRegistered } from "@/constants"
+import { Voter } from "@/interfaces/Voter"
 import { readContract, prepareWriteContract, writeContract } from "@wagmi/core"
-import {BaseError, ContractFunctionRevertedError, createPublicClient, http, parseAbiItem} from "viem"
+import { BaseError, ContractFunctionRevertedError, createPublicClient, http, parseAbiItem } from "viem"
 import { hardhat, sepolia } from "viem/chains"
+import {Proposal} from "@/interfaces/Proposal";
 
+export const getWorkflowStatus = async (address: `0x${string}`): Promise<number> => {
+    return readContractByFunctionName<number>('workflowStatus', address )
+}
+
+const usedNetwork = () => {
+    switch (network) {
+        case 'sepolia': return sepolia
+        case 'hardhat': return hardhat
+    }
+}
 
 export const client = createPublicClient({
-    chain: process.env.NEXT_PUBLIC_ENABLE_TESTNETS ? hardhat : sepolia,
+    chain: usedNetwork(),
     transport: http()
 })
 
@@ -25,12 +36,11 @@ export const userIsVoter = async (address: `0x${string}`): Promise<boolean> => {
 export const GetProposals = async (address: `0x${string}`, logId: number): Promise<Proposal> => {
     return readContractByFunctionName<Proposal>('getOneProposal', address, logId).then(
         proposal => proposal
-    ).catch(
-        err => console.log(err.message)
     )
 }
 
 export const readContractByFunctionName = async <T>(functionName: string, address: `0x${string}`, ...args: `0x${string}`[]|string[]|number[]): Promise<T> => {
+
     try {
         const data: Promise<T>|unknown = await readContract({
             address: contractAddress,
@@ -71,7 +81,7 @@ export const getContractEvents = async () => {
             fromBlock: 0n,
             toBlock: 'latest'
         })
-        console.log("getLogs => " + logs)
+        console.log("event ProposalsRegistered result => " + logs.length)
         return logs
 
     } catch (err) {
@@ -80,12 +90,12 @@ export const getContractEvents = async () => {
 }
 
 
-const formattedError = (err: any) => {
+const formattedError = (err: any): Error => {
     if (err instanceof BaseError) {
         // Option 1: checking the instance of the error
         if (err.cause instanceof ContractFunctionRevertedError) {
             const cause: ContractFunctionRevertedError = err.cause
-            const error = cause.data?.errorName ?? 'Unkown error'
+            const error = cause.reason ?? 'Unknown error'
 
             throw new Error(error)
         }
@@ -93,11 +103,12 @@ const formattedError = (err: any) => {
         // Option 2: using `walk` method from `BaseError`
         const revertError: any = err.walk(err => err instanceof ContractFunctionRevertedError)
         if (revertError) {
-            const error = revertError.data?.message ?? 'Unkown error'
+            const error = revertError.data?.message ?? 'Unknown error'
 
             throw new Error(error)
         }
     }
+
 
     throw new Error(err.message)
 }

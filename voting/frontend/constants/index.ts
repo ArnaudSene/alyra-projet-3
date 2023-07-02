@@ -1,6 +1,75 @@
-export const contractAddress  = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}` as `0x${string}`
+export const contractAddress = `${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}` as `0x${string}`
+export const genesisBlock = `${process.env.NEXT_PUBLIC_GENESIS_BLOCK}`
+export const network = `${process.env.NEXT_PUBLIC_NETWORK}`
 export const VoterRegistered = 'event VoterRegistered(address voterAddress)'
 export const ProposalsRegistered = 'event ProposalRegistered(uint proposalId)'
+export const registeringVotersStatus = 'RegisteringVoters'
+export const proposalsRegistrationStartedStatus = 'ProposalsRegistrationStarted'
+export const proposalsRegistrationEndedStatus = 'ProposalsRegistrationEnded'
+export const votingSessionStartedStatus = 'VotingSessionStarted'
+export const votingSessionEndedStatus = 'VotingSessionEnded'
+export const votesTalliedStatus = 'VotesTallied'
+
+export const WorkflowStatus: ('RegisteringVoters' | 'ProposalsRegistrationStarted' | 'ProposalsRegistrationEnded' | 'VotingSessionStarted' | 'VotingSessionEnded' | 'VotesTallied')[] = [
+    'RegisteringVoters',
+    'ProposalsRegistrationStarted',
+    'ProposalsRegistrationEnded',
+    'VotingSessionStarted',
+    'VotingSessionEnded',
+    'VotesTallied'
+]
+
+export interface WorkflowStepper {
+    id: number
+    title: string
+    description: string
+}
+
+const RegisteringVoters: WorkflowStepper = {
+    id: 0,
+    title: "RegisteringVoters",
+    description: "Registering voters session [Admin]",
+}
+
+const ProposalsRegistrationStarted: WorkflowStepper = {
+    id: 1,
+    title: "ProposalsRegistrationStarted",
+    description: "Registering proposals session [voters]",
+}
+
+const ProposalsRegistrationEnded: WorkflowStepper = {
+    id: 3,
+    title: "ProposalsRegistrationEnded",
+    description: "End of proposal registration",
+}
+const VotingSessionStarted: WorkflowStepper = {
+    id: 4,
+    title: "VotingSessionStarted",
+    description: "Voting Session [voters]",
+}
+
+const VotingSessionEnded: WorkflowStepper = {
+    id: 5,
+    title: "VotingSessionEnded",
+    description: "End of voting session",
+}
+
+const VotesTallied: WorkflowStepper = {
+    id: 6,
+    title: "VotesTallied",
+    description: "Tally Votes",
+}
+
+
+export const WorkflowStatusStepper: WorkflowStepper[] = [
+    RegisteringVoters,
+    ProposalsRegistrationStarted,
+    ProposalsRegistrationEnded,
+    VotingSessionStarted,
+    VotingSessionEnded,
+    VotesTallied
+]
+
 
 export const abi = [
     {

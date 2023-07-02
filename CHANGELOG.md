@@ -1,12 +1,43 @@
 # Changelog
 
+## [0.14.0] (2023-07-02)
+
+### feat: Stepper/ListProposals/SendVote...
+
+- Add a stepper to follow the workflow status
+- Add list of proposal and select to submit a vote
+- Remove the text inside an input after submit
+- Fix some minors issues
+
+---
+
+## 0.13.0 (2023-06-30)
+
+### fix: Add Loader component + fix on sepolia
+
+- Add Loader component
+- Some fixes on sepolia
+
+---
+
+## 0.12.0 (2023-06-30)
+
+### feat: Refactoring + Implement Send vote
+
+- Add Proposal interface
+- Refactor the ProposalManager in SendProposal and SendVote
+- Implement SendVote
+- Refactor admin page with new WinningProposal component
+- Refactor WorkflowManager
+- Fix the refresh of WorkflowStatus
+
 ## 0.11.1 (2023-06-30)
 
 ### fix: readContract needs address as params 
 
-- Add optional account attribute to readContract function
-- https://viem.sh/docs/contract/readContract.html
-- Add parameter for every call
+- readContractByFunctionName receive a new mandatory parameter
+  - readContract function has an optional parameter `account`. Unfortunately the request fails If this parameter is excluded
+  - https://viem.sh/docs/contract/readContract.html#account-optional
 
 ---
 

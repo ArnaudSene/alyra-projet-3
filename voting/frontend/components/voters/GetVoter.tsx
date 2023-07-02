@@ -36,6 +36,7 @@ const GetVoter = () => {
                 })
             )
         }
+        setVoterAddress("")
     }
 
     return (
@@ -45,6 +46,7 @@ const GetVoter = () => {
                     <input
                         type="text"
                         onChange={e => setVoterAddress(e.target.value)}
+                        value={voterAddress}
                         className="bg-indigo-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-900 block w-full p-2"
                         placeholder="Voter address"
                     />
@@ -54,7 +56,8 @@ const GetVoter = () => {
                     <button
                         onClick={() => getVoter()}
                         className="bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg"
-                    >Get Voter
+                    >
+                        Get Voter
                     </button>
                 </div>
             </div>

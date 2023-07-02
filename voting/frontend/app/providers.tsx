@@ -7,6 +7,7 @@ import {configureChains, createConfig, WagmiConfig} from 'wagmi';
 import {hardhat, sepolia} from 'wagmi/chains';
 import {publicProvider} from 'wagmi/providers/public';
 import { ChakraProvider } from '@chakra-ui/react';
+import { WorkflowStatusContextProvider } from '@/context/workflowStatus';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
     [
@@ -42,7 +43,7 @@ const connectors = connectorsForWallets([
 ]);
 
 const wagmiConfig = createConfig({
-    autoConnect: false,
+    autoConnect: true,
     connectors,
     publicClient,
     webSocketPublicClient,
@@ -60,7 +61,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
                     borderRadius: 'medium',
                 })}>
                 <ChakraProvider>
-                    {mounted && children}
+                    <WorkflowStatusContextProvider>
+                        {mounted && children}
+                    </WorkflowStatusContextProvider>
                 </ChakraProvider>
             </RainbowKitProvider>
         </WagmiConfig>

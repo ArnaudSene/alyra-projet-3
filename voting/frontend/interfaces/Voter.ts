@@ -3,8 +3,3 @@ export interface Voter {
     isRegistered: boolean
     votedProposalId?: number
 }
-
-export interface Proposal {
-    description: string;
-    voteCount: number;
-}
