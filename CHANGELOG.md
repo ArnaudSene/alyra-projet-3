@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.15.0] (2023-07-02)
+
+### feat: Refacto home page
+
+- Align Wallet button + title on home page
+- Component for title
+
+---
+
 ## [0.14.1] (2023-07-02)
 
 ### fix: Chakra bug with attributes in Stepper + Context Proposal 
