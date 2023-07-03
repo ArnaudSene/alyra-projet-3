@@ -1,6 +1,10 @@
 # Alyra myVote
 ----
 
+[Vidéo de démonstration dApp Voting pour le projet 3](https://youtu.be/FKCMrQD8zCQ)
+
+dApp réalisée par Alexandre Caliaro et Arnaud Séné 
+
 
 ### Technologie 
 
