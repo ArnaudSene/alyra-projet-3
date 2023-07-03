@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.18.0] (2023-07-03)
+
+### feat: Add scripts 
+
+- 01 Deploy smart contract
+- 02 Execute full workflow
+- 03 Add voters
+- 04 Add voters and proposals
+- 05 Add voters, proposals and votes
+
+---
+
 ## [0.17.0] (2023-07-03)
 
 ### feat: Implementation of WinningProposal + Fixes of PR#22
