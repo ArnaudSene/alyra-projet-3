@@ -1,67 +1,88 @@
 "use client"
 
-import { getContractEvents, GetProposals } from "@/utils"
+import { getProposalsRegisteredEvents, readContractByFunctionName } from "@/utils"
 import { useEffect, useState } from "react"
-import { useAccount } from "wagmi";
-import { votingSessionStartedStatus, WorkflowStatus } from "@/constants";
-import { useWorkflowStatusContext } from "@/context/workflowStatus";
-import { useSelectProposalContext } from "@/context/SelectProposal";
+import { useAccount } from "wagmi"
+import { votingSessionStartedStatus, WorkflowStatus } from "@/constants"
+import { useWorkflowStatusContext } from "@/context/workflowStatus"
+import { useSelectProposalContext } from "@/context/SelectProposal"
+import { Proposal } from "@/interfaces/Proposal"
+import { Text } from "@chakra-ui/react"
+import { Voter } from "@/interfaces/Voter"
 
-const GetProposalsList = ({addNewProposal}: {addNewProposal?: boolean}) => {
-
+const GetProposalsList = ({ refresh }: { refresh?: boolean }) => {
     const { address } = useAccount()
-    const [proposals, setProposals] = useState<string[]>([])
+
+    const [proposals, setProposals] = useState<Proposal[]>([])
+    const [voter, setVoter] = useState<Voter>()
+    const [isVotingSession, setIsVotingSession] = useState(false)
+
     const { workflowStatus } = useWorkflowStatusContext()
-    const [title, setTitle] = useState("List of proposals")
-    const { setDescription, setId} = useSelectProposalContext()
+    const { id, setDescription, setId } = useSelectProposalContext()
 
-    const GetListOfProposals = () => {
-        getContractEvents().then(events => {
-            let data: string[] = []
-
+    const getListOfProposals = async () => {
+        getProposalsRegisteredEvents().then(events => {
+            let data: Proposal[] = []
             for (let i = 0; i < events.length; i++) {
-                GetProposals(address as `0x${string}`, i)
-                    .then(
-                        proposal => {
-                            data = [...data, proposal.description]
-                        })
-                    .catch(err => console.log("err => " + err))
-                    .finally(() => {
-                        setProposals(data)
-                    })
+                readContractByFunctionName<Proposal>('getOneProposal', address as `0x${string}`, i).then(
+                    proposal => data = [...data, proposal]
+                ).catch(err => console.log(err))
+                .finally(() => {
+                    setProposals(data)
+                })
             }
         })
     }
 
     useEffect(() => {
-        console.log("triggered by => " + addNewProposal)
-        GetListOfProposals()
-        if (WorkflowStatus[workflowStatus] === votingSessionStartedStatus) setTitle("Select your proposal and vote")
-    }, [workflowStatus, addNewProposal])
+        getListOfProposals()
+        setIsVotingSession(WorkflowStatus[workflowStatus] === votingSessionStartedStatus)
+        readContractByFunctionName<Voter>('getVoter', address as `0x${string}`, address as `0x${string}`).then(
+            voter => setVoter(voter)
+        ).catch(err => console.log(err))
+    }, [workflowStatus, refresh])
 
     const onSelect = (index: string, description: string) => {
         setDescription(description)
         setId(index)
     }
 
-    return (<>
-        <div className="p-4 font-bold text-xl text-center">{title}</div>
-        <div className="flex flex-col">
-            {proposals.length > 0 &&
-                proposals?.map((description, index) => (
-                    <div className="p-1 w-3/4 mx-auto ">
+    const checkSelectedProposal = (index: number): boolean => {
+        return (voter?.hasVoted ? index.toString() === voter?.votedProposalId?.toString() : index.toString() === id)
+    }
 
-                        <button
-                            className="w-full content-center bg-indigo-950 hover:bg-indigo-400 hover:text-gray-900 text-white font-semibold rounded-lg py-5 px-4 "
-                            id={index.toString()}
-                            onClick={() => onSelect(index.toString(), description)} type="button" >
-                            {description}
-                        </button>
-
-                    </div>
-                ))}
+    return (proposals.length > 0 && (<>
+        <div className="p-4 font-bold text-xl text-center">
+            {!voter?.hasVoted && isVotingSession ? 'Select your proposal and vote' : 'List of proposals'}
         </div>
-    </>);
+
+        {proposals?.map((proposal, index) =>
+            <section key={index}>
+                <article className={`p-5 flex flex-row ${voter?.hasVoted && checkSelectedProposal(index) ? 'bg-indigo-300' : ''}`}>
+                    <div className="w-3/4 mx-auto">
+                        <Text className="font-semibold pr-2">Proposal n°{index + 1}:</Text>
+                        <Text>{proposal.description}</Text>
+                    </div>
+
+                    {isVotingSession &&
+                        <button
+                            className={`max-h-14 min-w-[15%] my-auto hover:bg-indigo-400 hover:text-gray-900 disabled:text-white text-white font-semibold rounded-lg p-4 ${checkSelectedProposal(index) ? 'bg-indigo-400 disabled:bg-indigo-400' : 'bg-indigo-950 disabled:bg-gray-500'}`}
+
+                            id={index.toString()}
+                            onClick={() => onSelect(index.toString(), proposal.description)}
+                            type="button"
+                            disabled={voter?.hasVoted}
+                        >
+                            {checkSelectedProposal(index) ? 'Selected Proposal' : 'Select Proposal'}
+                        </button>
+                    }
+                </article>
+
+                <hr className="my-2 border-gray-400" />
+            </section>
+        )
+        }
+    </>));
 }
 
 export default GetProposalsList

@@ -1,24 +1,13 @@
-import {
-    Stack,
-    Step,
-    StepIcon,
-    StepIndicator,
-    StepNumber,
-    Stepper,
-    StepSeparator,
-    StepStatus,
-    Text, useSteps
-} from "@chakra-ui/react";
-import React, {useEffect} from "react";
-import {useWorkflowStatusContext} from "@/context/workflowStatus";
-import {WorkflowStatusStepper, WorkflowStepper} from "@/constants";
-import {getWorkflowStatus} from "@/utils";
-import {useAccount} from "wagmi";
-import {TitleHeader} from "@/components/TitleHeader";
+import { Step, StepIndicator, Stepper, StepSeparator, StepStatus, Text, useSteps} from "@chakra-ui/react"
+import React, { useEffect } from "react"
+import { useWorkflowStatusContext } from "@/context/workflowStatus"
+import { WorkflowStatusStepper, WorkflowStepper } from "@/constants/stepper"
+import { getWorkflowStatus } from "@/utils"
+import { useAccount } from "wagmi"
 
 export const WorkflowStepperManager = () => {
     const { address } = useAccount()
-    const { workflowStatus, setWorkflowStatus} = useWorkflowStatusContext()
+    const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
     const steps: WorkflowStepper[] = WorkflowStatusStepper
     const { activeStep, setActiveStep } = useSteps({
         index: workflowStatus,
@@ -35,29 +24,21 @@ export const WorkflowStepperManager = () => {
     }, [workflowStatus])
 
     return (
-        <div className="pb-10">
-            <TitleHeader/>
+        <div className="mb-20 mt-10">
+            <Stepper size='md' colorScheme='purple' index={activeStep}>
+                {steps.map((step, index) => (
+                    <Step key={index}>
+                        <StepIndicator>
+                            <StepStatus complete={`✔️`} incomplete={`🗸`} active={`📍`} />
+                        </StepIndicator>
 
-            <Stack>
-                <Stepper size='md' colorScheme='purple' index={activeStep} gap='0'>
-                    {steps.map((step, index) => (
-                        <Step key={index}>
-                            <StepIndicator>
-                                <StepStatus
-                                    complete={<StepIcon />}
-                                    incomplete={<StepNumber />}
-                                    active={<StepNumber />}
-                                />
-
-                            </StepIndicator>
-                            <StepSeparator />
-                        </Step>
-                    ))}
-                </Stepper>
-                <Text>
-                    Step {activeStep + 1}: <b>{activeStepText}</b>
-                </Text>
-            </Stack>
+                        <StepSeparator />
+                    </Step>
+                ))}
+            </Stepper>
+            <Text className="text-center font-semibold text-xl p-5">
+                <span className="font-bold text-violet-500 underline underline-offset-4">Step {activeStep + 1}:</span> {activeStepText}
+            </Text>
         </div>
     );
 };

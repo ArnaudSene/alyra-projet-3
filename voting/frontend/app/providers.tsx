@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import * as React from 'react';
-import {connectorsForWallets, darkTheme, getDefaultWallets, RainbowKitProvider,} from '@rainbow-me/rainbowkit';
-import {argentWallet, ledgerWallet, trustWallet,} from '@rainbow-me/rainbowkit/wallets';
-import {configureChains, createConfig, WagmiConfig} from 'wagmi';
-import {hardhat, sepolia} from 'wagmi/chains';
-import {publicProvider} from 'wagmi/providers/public';
-import { ChakraProvider } from '@chakra-ui/react';
-import { WorkflowStatusContextProvider } from '@/context/workflowStatus';
-import {SelectProposalContextProvider} from "@/context/SelectProposal";
+import * as React from 'react'
+
+import { connectorsForWallets, darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { argentWallet, ledgerWallet, trustWallet } from '@rainbow-me/rainbowkit/wallets'
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import { hardhat, sepolia } from 'wagmi/chains'
+import { publicProvider } from 'wagmi/providers/public'
+import { ChakraProvider } from '@chakra-ui/react'
+import { WorkflowStatusContextProvider } from '@/context/workflowStatus'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
     [
@@ -63,10 +63,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 })}>
                 <ChakraProvider>
                     <WorkflowStatusContextProvider>
-                        <SelectProposalContextProvider>
                             {mounted && children}
-                        </SelectProposalContextProvider>
-
                     </WorkflowStatusContextProvider>
                 </ChakraProvider>
             </RainbowKitProvider>

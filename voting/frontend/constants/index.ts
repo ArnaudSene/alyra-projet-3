@@ -19,58 +19,6 @@ export const WorkflowStatus: ('RegisteringVoters' | 'ProposalsRegistrationStarte
     'VotesTallied'
 ]
 
-export interface WorkflowStepper {
-    id: number
-    title: string
-    description: string
-}
-
-const RegisteringVoters: WorkflowStepper = {
-    id: 0,
-    title: "RegisteringVoters",
-    description: "Registering voters session [Admin]",
-}
-
-const ProposalsRegistrationStarted: WorkflowStepper = {
-    id: 1,
-    title: "ProposalsRegistrationStarted",
-    description: "Registering proposals session [voters]",
-}
-
-const ProposalsRegistrationEnded: WorkflowStepper = {
-    id: 3,
-    title: "ProposalsRegistrationEnded",
-    description: "End of proposal registration",
-}
-const VotingSessionStarted: WorkflowStepper = {
-    id: 4,
-    title: "VotingSessionStarted",
-    description: "Voting Session [voters]",
-}
-
-const VotingSessionEnded: WorkflowStepper = {
-    id: 5,
-    title: "VotingSessionEnded",
-    description: "End of voting session",
-}
-
-const VotesTallied: WorkflowStepper = {
-    id: 6,
-    title: "VotesTallied",
-    description: "Tally Votes",
-}
-
-
-export const WorkflowStatusStepper: WorkflowStepper[] = [
-    RegisteringVoters,
-    ProposalsRegistrationStarted,
-    ProposalsRegistrationEnded,
-    VotingSessionStarted,
-    VotingSessionEnded,
-    VotesTallied
-]
-
-
 export const abi = [
     {
         "anonymous": false,
@@ -264,6 +212,31 @@ export const abi = [
     },
     {
         "inputs": [],
+        "name": "getWinningProposal",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "voteCount",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct Voting.Proposal",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "owner",
         "outputs": [
             {
@@ -327,19 +300,6 @@ export const abi = [
         "name": "transferOwnership",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "winningProposalID",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     },
     {
