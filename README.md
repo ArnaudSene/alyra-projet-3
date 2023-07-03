@@ -1,13 +1,15 @@
 # Alyra myVote
+----
 
-## Technologie 
+
+### Technologie 
 
 - NEXT.js
 - Hardhat
 - RainbowKit
 - Wagmi
 
-## Prérequis
+### Prérequis
 
 Renommer les fichiers `.env.example` en `.env` dans les dossiers `fonrtend` et `backend`. Puis renseigner vos variables d'environnement local.
 
@@ -18,28 +20,22 @@ Pour le désactiver, modifier cet valeur dans `frontend/.env`:
 NEXT_PUBLIC_ENABLE_TESTNETS=false
 ```
 
-# Installation DEV
-## Frontend Installation
+----
+## Installation DEV
+----
 
 ### Installer les dépendances
+  
+Lancer cet comande a partir des dossiers `voting/frontend` et `voting/backend`
 
 ```shell
-cd voting/frontend
 npm install
 ```
 
-## Backend Installation
+### Lancer le projet en local
 
-### Installer les dépendances
 
-```shell
-cd ../backend
-npm install
-```
-
-## Lancer le projet en local
-
-- Dans un premier terminal, lancé la commandea suivante à partir de `voting/backend`
+- Dans un premier terminal, lancé la commande suivante à partir de `voting/backend`
 
 ```shell
 npx hardhat node
@@ -57,7 +53,7 @@ npx hardhat run --network localhost scripts/deploy.ts
 npx hardhat run --network sepolia scripts/deploy.ts
 ```
 
-- Dirigez vous vers votre fichier `.env` dans le dossier `backend`. Ensuite modifier vos variables d'environnement local suivant le resaux que vous avez choisie.
+- Modifier votre fichier `.env` dans le dossier `backend` avec vos variables d'environnement local suivant le resaux que vous avez choisie.
 
 - Revenir au terminal et lancer les commandes suivantes:
 
