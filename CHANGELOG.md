@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.19.0] (2023-07-03)
+
+### feat: Update design
+
+- Update design
+  - Add ChakraUI Theme
+  - Implement an AppButton
+  - Change Stepper emoji
+
+---
+
 ## [0.18.0] (2023-07-03)
 
 ### feat: Add scripts 

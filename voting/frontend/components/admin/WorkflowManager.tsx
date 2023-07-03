@@ -8,8 +8,9 @@ import { WorkflowStatus, abi, contractAddress, proposalsRegistrationEndedStatus,
 import { useContractEvent } from "wagmi";
 import { Log } from "viem";
 import Loader from "../Loader";
-import {useAccount} from "wagmi";
+import { useAccount } from "wagmi";
 import Event from "../Event";
+import AppButton from "../AppButton";
 
 const WorkflowManager = () => {
     const [logs, setLogs] = useState<Log[]>()
@@ -17,6 +18,7 @@ const WorkflowManager = () => {
     const { address } = useAccount()
     const { workflowStatus, setWorkflowStatus } = useWorkflowStatusContext()
     const toast = useToast()
+    const [linkDescription, setLinkDescription] = useState('')
 
     useContractEvent({
         address: contractAddress,
@@ -32,7 +34,20 @@ const WorkflowManager = () => {
             id => setWorkflowStatus(id)
         ).catch(err => console.log(err))
         .finally(() => setLoading(false))
-    }, [logs])
+
+        switch (WorkflowStatus[workflowStatus]) {
+            case registeringVotersStatus: setLinkDescription('Start Proposal Registration')
+                break
+            case proposalsRegistrationStartedStatus: setLinkDescription('End Proposal Registration')
+                break
+            case proposalsRegistrationEndedStatus: setLinkDescription('Start Voting Session')
+                break
+            case votingSessionStartedStatus: setLinkDescription('End Voting Session')
+                break
+            case votingSessionEndedStatus: setLinkDescription('Tails Vote')
+                break
+        }
+    }, [logs, workflowStatus])
 
     const nextWorkflowStatus = () => {
         let funcName = '';
@@ -74,15 +89,14 @@ const WorkflowManager = () => {
     return (
         <Loader isLoading={loading}>
             {WorkflowStatus[workflowStatus] !== votesTalliedStatus &&
-                <div className="mb-2 text-center p-4 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border ">
-                    <button onClick={() => nextWorkflowStatus()} className="bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg">
-                        Next Step: {WorkflowStatus[workflowStatus + 1]}
-                    </button>
-                </div>
+                <AppButton className="flex flex-row justify-center text-lg pt-10"
+                    title="Next Step:"
+                    description={linkDescription}
+                    onClick={() => nextWorkflowStatus()}
+                />
             }
-
             <Event name='WorkflowStatusChange'></Event>
-        </Loader>
+        </Loader >
     )
 }
 export default WorkflowManager

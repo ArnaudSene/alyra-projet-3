@@ -60,8 +60,10 @@ const GetProposalsList = ({ refresh }: { refresh?: boolean }) => {
             <section key={index}>
                 <article className={`p-5 flex flex-row ${voter?.hasVoted && checkSelectedProposal(index) ? 'bg-indigo-300' : ''}`}>
                     <div className="w-3/4 mx-auto">
-                        <Text className="font-semibold pr-2">Proposal n°{index + 1}:</Text>
-                        <Text>{proposal.description}</Text>
+                        <h3 className="text-lg font-bold pb-4 text-indigo-500 underline">
+                            Proposal n°{index + 1}:
+                        </h3>
+                        <Text className="pl-6">{proposal.description}</Text>
                     </div>
 
                     {isVotingSession &&

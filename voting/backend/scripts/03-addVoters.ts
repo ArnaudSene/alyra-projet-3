@@ -1,4 +1,5 @@
-const { ethers} = require("hardhat");
+import { ethers } from "hardhat"
+
 async function main() {
     const [owner] = await ethers.getSigners()
     const Voting = await ethers.getContractFactory("Voting")
@@ -10,7 +11,7 @@ async function main() {
     // 0 => means all signers
     // 5 => the 5 first signers
     const maxSigners = 5
-    const accounts = []
+    const accounts: any[] = []
 
     // voters accounts
     await ethers.getSigners()

@@ -78,22 +78,18 @@ const VoterManager = () => {
         <Loader isLoading={loading}>
             <section className="my-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
                 <div className="flex justify-between p-3">
-                    <div className="m-auto w-3/4">
                         <input
                             type="text"
                             onChange={e => setNewVoter(e.target.value)}
-                            className="bg-indigo-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-900 block w-full p-2"
+                            className="w-full mr-3 p-2 leading-tight focus:outline-none bg-indigo-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-700 focus:border-indigo-900"
                             placeholder="Voter address"
                         />
-                    </div>
 
-                    <div className="m-auto w-1/4 text-center">
                         <button onClick={() => addVoter()}
-                            className="content-center bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg"
+                            className="min-w-[15%] content-center bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg"
                         >
                             Add Voter
                         </button>
-                    </div>
                 </div>
 
                 {depositEvents?.length > 0 &&
