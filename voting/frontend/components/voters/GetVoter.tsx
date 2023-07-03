@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react";
-import { readContractByFunctionName } from "@/utils";
-import { Voter } from "@/interfaces/Voter";
-import {useToast} from "@chakra-ui/react";
-import {useAccount} from "wagmi";
+import { useState } from "react"
+import { readContractByFunctionName } from "@/utils"
+import { Voter } from "@/interfaces/Voter"
+import { useToast } from "@chakra-ui/react"
+import { useAccount } from "wagmi"
 
 const GetVoter = () => {
     const { address } = useAccount()
@@ -25,7 +25,10 @@ const GetVoter = () => {
             })
         } else {
             readContractByFunctionName<Voter>('getVoter', address as `0x${string}`, voterAddress).then(
-                voter => setVoter(voter)
+                voter => {
+                    setVoter(voter)
+                    setVoterAddress('')
+                }
             ).catch(
                 err => toast({
                     title: 'Unable getting voter information',
@@ -36,7 +39,6 @@ const GetVoter = () => {
                 })
             )
         }
-        setVoterAddress("")
     }
 
     return (

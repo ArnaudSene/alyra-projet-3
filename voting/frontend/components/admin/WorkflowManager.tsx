@@ -9,6 +9,7 @@ import { useContractEvent } from "wagmi";
 import { Log } from "viem";
 import Loader from "../Loader";
 import {useAccount} from "wagmi";
+import Event from "../Event";
 
 const WorkflowManager = () => {
     const [logs, setLogs] = useState<Log[]>()
@@ -72,20 +73,15 @@ const WorkflowManager = () => {
 
     return (
         <Loader isLoading={loading}>
-            <div className="mt-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
-                <div className="p-4 font-bold text-md">
-                    Workflow Status : {WorkflowStatus[workflowStatus]}
-                </div>
-            </div>
-
             {WorkflowStatus[workflowStatus] !== votesTalliedStatus &&
-                <div className="mt-2 p-4 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border ">
+                <div className="mb-2 text-center p-4 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border ">
                     <button onClick={() => nextWorkflowStatus()} className="bg-indigo-950 hover:bg-indigo-100 hover:text-gray-900 text-white font-semibold py-2 px-4 rounded-lg">
                         Next Step: {WorkflowStatus[workflowStatus + 1]}
                     </button>
                 </div>
             }
 
+            <Event name='WorkflowStatusChange'></Event>
         </Loader>
     )
 }

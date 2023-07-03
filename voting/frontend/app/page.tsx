@@ -1,37 +1,52 @@
 'use client'
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount } from "wagmi";
-import {ActionMenu} from "@/components/home/ActionMenu";
-import {WorkflowStepperManager} from "@/components/home/WorkflowStepperManager";
-import {TitleHeader} from "@/components/TitleHeader";
+import { WorkflowStatus, proposalsRegistrationStartedStatus, votesTalliedStatus, votingSessionStartedStatus } from "@/constants"
+import { useWorkflowStatusContext } from "@/context/workflowStatus"
+import { useAccount } from "wagmi"
+import { useEffect, useState } from "react"
+import { userIsOwner, userIsVoter } from "@/utils"
+
+import VoterActionMenu from "@/components/voters/VoterActionMenu"
+import Loader from "@/components/Loader"
+import AdminActionMenu from "@/components/admin/AdminActionMenu"
+import WinningProposal from "@/components/WinningProposal"
 
 export default function Home() {
-  const { isConnected } = useAccount()
+    const { workflowStatus } = useWorkflowStatusContext()
+    const { address, isConnected } = useAccount()
+    const [isOwner, setIsOwner] = useState(false)
+    const [isVoter, setIsVoter] = useState(false)
+    const [loading, setLoading] = useState(false)
 
-  return (
-    <div>
-        {!isConnected ? (
-            <>
-                <TitleHeader/>
-                <div className="mx-auto w-1/2 rounded h-auto min-h-[50px] text-center bg-gray-800 text-zinc-200 shadow-lg drop-shadow-lg border-gray-800 border">
+    useEffect(() => {
+        setLoading(true)
+        if (isConnected) {
+            userIsOwner(address as `0x${string}`).then(
+                isOwner => setIsOwner(isOwner)
+            ).catch(err => console.log(err))
+            .finally(() =>
+                userIsVoter(address as `0x${string}`).then(
+                    isVoter => setIsVoter(isVoter)
+                ).catch(err => console.log(err))
+                .finally(() => setLoading(false))
+            )
+        }
+    }, [address, isConnected, workflowStatus])
 
-                    <p className="py-6">Please connect to wallet to access myVote</p>
+    return (
+        <Loader isLoading={loading}>
+            {WorkflowStatus[workflowStatus] === votesTalliedStatus && <WinningProposal />}
 
+            <div className="flex flex-col space-y-2 mx-auto max-w-screen-lg">
+                {isVoter && (WorkflowStatus[workflowStatus] !== proposalsRegistrationStartedStatus &&
+                    WorkflowStatus[workflowStatus] !== votingSessionStartedStatus &&
+                    WorkflowStatus[workflowStatus] !== votesTalliedStatus
+                ) ? <h2 className="font-bold text-lg text-center mb-3">No actions available yet for Voters</h2>
+                    : <VoterActionMenu />
+                }
 
-                    <div className="flex flex-col w-1/4 mx-auto m-1 py-6">
-                        <ConnectButton />
-                    </div>
-                </div>
-            </>
-        ) : (
-            <>
-                <WorkflowStepperManager />
-                <div className="flex flex-col space-y-2 mx-auto max-w-screen-lg">
-                <ActionMenu/>
-                </div>
-            </>
-        )}
-      </div>
-  )
+                {isOwner && <AdminActionMenu />}
+            </div>
+        </Loader>
+    )
 }

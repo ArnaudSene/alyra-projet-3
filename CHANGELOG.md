@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.17.0] (2023-07-03)
+
+### feat: Implementation of WinningProposal + Fixes of PR#22
+
+- Refactor codes of many components
+- Implements all fixes for PR#22
+- Implement WinningProposal
+
+---
+
 ## [0.16.0] (2023-07-02)
 
 ### feat: Update smart contrat for winningProposal

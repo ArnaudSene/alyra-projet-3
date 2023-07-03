@@ -3,17 +3,16 @@
 import { writeContractByFunctionName } from "@/utils"
 import { useState } from "react"
 import { useToast } from "@chakra-ui/react"
-import { useContractEvent } from "wagmi";
-import { abi, contractAddress } from "@/constants";
-import { Log } from "viem";
-import GetProposalsList from "@/components/voters/GetProposalsList";
+import { useContractEvent } from "wagmi"
+import { abi, contractAddress } from "@/constants"
+
+import GetProposalsList from "@/components/voters/GetProposalsList"
 
 const SendProposal = () => {
+    const [ proposal, setProposal ] = useState('')
+    const [ refresh, setRefresh ] = useState(false)
 
-    const [proposal, setProposal] = useState('')
     const toast = useToast()
-    const [logs, setLogs] = useState<Log[]>()
-    const [ newProposal, setNewProposal] = useState(false)
 
     const submitProposal = () => {
         if (proposal.trim().length <= 0) {
@@ -27,7 +26,8 @@ const SendProposal = () => {
         } else {
             writeContractByFunctionName('addProposal', proposal).then(
                 () => {
-                    setNewProposal(true)
+                    setRefresh(true)
+                    setProposal('')
                     toast({
                         title: 'Proposal successfully added.',
                         description: `proposal: ${proposal}.`,
@@ -44,10 +44,7 @@ const SendProposal = () => {
                     duration: 5000,
                     isClosable: true,
                 })
-            ).finally(() => {
-                setProposal("")
-
-            })
+            )
         }
     }
 
@@ -55,15 +52,13 @@ const SendProposal = () => {
         address: contractAddress,
         abi: abi,
         eventName: 'ProposalRegistered',
-        listener(log) {
-            setLogs(log)
-            setNewProposal(false)
+        listener() {
+            setRefresh(false)
         }
     })
 
 
-    return (<>
-
+    return (
         <section className="m-2 mx-auto w-3/4 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-800 text-indigo-100 shadow-lg drop-shadow-lg border-indigo-600 border">
             <h2 className="font-bold text-lg text-center mb-3">Send a Proposal</h2>
             <form className="w-full m-auto p-3 pr-3">
@@ -84,9 +79,9 @@ const SendProposal = () => {
                     </button>
                 </div>
             </form>
-            <GetProposalsList addNewProposal={newProposal}/>
 
+            <GetProposalsList refresh={refresh} />
         </section>
-    </>);
+    );
 }
 export default SendProposal;

@@ -6,7 +6,7 @@ import { Log } from "viem"
 import { useContractEvent } from "wagmi"
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Button } from "@chakra-ui/button";
-import { Collapse} from "@chakra-ui/react";
+import { Collapse } from "@chakra-ui/react";
 
 
 const Event = ({ name }: { name: string }) => {
@@ -28,32 +28,43 @@ const Event = ({ name }: { name: string }) => {
         if (logs) setLoading(false)
     }, [logs])
 
-    return (
-        <>
-            <div className="mx-auto w-3/4 p-4 text-sm rounded h-auto bg-gradient-to-r from-indigo-100 to-indigo-200 text-gray-900 shadow-lg drop-shadow-lg border-indigo-600 border">
-                <Button isLoading={loading} onClick={onToggle} >Show {name} Log</Button >
+    return (logs && logs.length > 0 &&
+        <div className="flex flex-col mx-auto w-3/4 p-4 text-sm rounded h-auto bg-gradient-to-r from-indigo-100 to-indigo-200 text-gray-900 shadow-lg drop-shadow-lg border-indigo-600 border">
+            <Button className='mx-auto' isLoading={loading} onClick={onToggle} >Show {name} Log</Button>
+            <Collapse in={isOpen} animateOpacity>
+                <div className="p-4 font-bold text-center text-lg">Last {name} log</div>
 
-                {logs && logs.length > 0 &&
-                    <Collapse in={isOpen} animateOpacity>
-                        <div>
-                            <div className="p-4 font-bold text-lg text-center">Last {name} log</div>
-
-                            <ul>
-                                <li className="pb-1">Address: {logs[0].address}</li>
-                                <li className="pb-1">BlockHash: {logs[0].blockHash}</li>
-                                <li className="pb-1">BlockNumber: {logs[0].blockNumber?.toString()}</li>
-                                <li className="pb-1">Data: {logs[0].data}</li>
-                                <li className="pb-1">Log Index: {logs[0].logIndex}</li>
-                                <li className="pb-1">Removed: {logs[0].removed ? 'Yes' : 'No'}</li>
-                                <li className="pb-1">Topics: {logs[0].topics}</li>
-                                <li className="pb-1">Transaction Hash: {logs[0].transactionHash}</li>
-                                <li className="pb-1">Transaction Index: {logs[0].transactionIndex}</li>
-                            </ul>
-                        </div>
-                    </Collapse>
-                }
-            </div>
-        </>
+                <ul>
+                    <li className="pb-1">
+                        <span className="font-semibold">Address:</span> {logs[0].address}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">BlockHash:</span> {logs[0].blockHash}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">BlockNumber:</span> {logs[0].blockNumber?.toString()}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">Data:</span> {logs[0].data}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">Log Index</span>: {logs[0].logIndex}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">Removed:</span> {logs[0].removed ? 'Yes' : 'No'}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">Topics:</span> {logs[0].topics}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">Transaction Hash:</span> {logs[0].transactionHash}
+                    </li>
+                    <li className="pb-1">
+                        <span className="font-semibold">Transaction Index:</span> {logs[0].transactionIndex}
+                    </li>
+                </ul>
+            </Collapse>
+        </div>
     )
 }
 export default Event
