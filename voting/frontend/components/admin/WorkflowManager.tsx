@@ -89,12 +89,13 @@ const WorkflowManager = () => {
     return (
         <Loader isLoading={loading}>
             {WorkflowStatus[workflowStatus] !== votesTalliedStatus &&
-                <AppButton className="flex flex-row justify-center text-lg pt-10"
+                <AppButton className="flex flex-row justify-center text-lg py-10"
                     title="Next Step:"
                     description={linkDescription}
                     onClick={() => nextWorkflowStatus()}
                 />
             }
+            
             <Event name='WorkflowStatusChange'></Event>
         </Loader >
     )

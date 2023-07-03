@@ -10,12 +10,15 @@ import { Providers } from './providers';
 import { WorkflowStepperManager } from '@/components/home/WorkflowStepperManager';
 import { AppLogo } from '@/components/AppLogo';
 
+import Navbar from '@/components/headers/Navbar';
+
 function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <body className="bg-gray-900 text-slate-200">
                 <Providers>
                     <Headers />
+                    <Navbar />
                     <main className='container mx-auto pt-10'>
                         <IsConnected>
                             <h1 className='text-center'><AppLogo/></h1>
