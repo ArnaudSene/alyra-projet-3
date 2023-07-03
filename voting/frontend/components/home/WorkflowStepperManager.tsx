@@ -25,11 +25,11 @@ export const WorkflowStepperManager = () => {
 
     return (
         <div className="mb-20 mt-10">
-            <Stepper size='md' colorScheme='purple' index={activeStep}>
+            <Stepper size='md' colorScheme="brand"  index={activeStep}>
                 {steps.map((step, index) => (
                     <Step key={index}>
                         <StepIndicator>
-                            <StepStatus complete={`✔️`} incomplete={`🗸`} active={`📍`} />
+                            <StepStatus complete={`🗸`} incomplete={`👣`} active={`📍`} />
                         </StepIndicator>
 
                         <StepSeparator />
@@ -37,7 +37,7 @@ export const WorkflowStepperManager = () => {
                 ))}
             </Stepper>
             <Text className="text-center font-semibold text-xl p-5">
-                <span className="font-bold text-violet-500 underline underline-offset-4">Step {activeStep + 1}:</span> {activeStepText}
+                <span className="font-bold text-indigo-500 underline underline-offset-4">Step {activeStep + 1}:</span> {activeStepText}
             </Text>
         </div>
     );

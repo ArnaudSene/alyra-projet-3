@@ -14,7 +14,7 @@ export const AppLogo = ({size = '6xl'}: {size?: 'md'|'xl'|'6xl'}) => {
                 setPSize(1)
                 break
             case 'xl':
-                setPbSize(4)
+                setPbSize(2)
                 setPSize(2)
                 break
             case '6xl':

@@ -34,10 +34,10 @@ const WinningProposal = () => {
 
     if (proposal !== undefined) return (
         <IsConnected>
-            <div className="mx-auto w-full mt-2 px-5 pb-5 rounded h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
-                <h2 className="py-3 font-bold text-center text-lg border-b border-indigo-300">Winning Proposal</h2>
+            <div className="mx-auto w-1/2 mt-2 px-5 pb-5 text-center rounded-full h-auto bg-gradient-to-r from-indigo-900 to-indigo-600 text-indigo-100 shadow-lg">
+                <h2 className="py-3 font-bold text-2xl border-b border-indigo-300 text-indigo-300">Winning Proposal</h2>
 
-                <div className="pt-2 text-lg">
+                <div className="pt-2 text-lg font-semibold">
                     <p>Votes count: <span className="font-semibold text-rose-300">{proposal ? Number(proposal?.voteCount) : ''}</span></p>
                     <p>Description: {proposal?.description}</p>
                 </div>

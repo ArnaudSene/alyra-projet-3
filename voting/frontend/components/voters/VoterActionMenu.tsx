@@ -5,6 +5,7 @@ import { useWorkflowStatusContext } from "@/context/workflowStatus"
 import { useEffect, useState } from "react"
 
 import Link from "next/link"
+import AppButton from "../AppButton"
 
 const VoterActionMenu = () => {
     const { workflowStatus } = useWorkflowStatusContext()
@@ -19,12 +20,8 @@ const VoterActionMenu = () => {
 
     return ((isProposalsRegistration || isVotingSession) &&
         <div className="flex flex-row justify-center text-lg">
-            <h2 className="font-bold pr-3 text-indigo-500 underline">
-                Action Available:
-            </h2>
-
-            <Link className="font-semibold hover:text-indigo-500 hover:font-bold" href="/voters">
-                {isProposalsRegistration ? 'Add your proposals' : 'Vote Now'}
+            <Link href="/voters">
+                <AppButton title="Action Available:" description={isProposalsRegistration ? 'Add your proposals' : 'Vote Now'}/>
             </Link>
         </div>
     )

@@ -24,6 +24,8 @@ const IsConnected = ({ children, asOwner, asVoter }: {
 
     useEffect(() => {
         setLoading(true)
+        setIsVoter(false)
+        setIsOwner(false)
         if (isConnected) {
             if (asOwner) userIsOwner(address as `0x${string}`).then(
                 isOwner => {

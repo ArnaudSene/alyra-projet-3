@@ -24,8 +24,8 @@ const Admin = () => {
   return (
     <Loader isLoading={loading}>
       <IsConnected asOwner={true}>
-        <WorkflowManager />
         {WorkflowStatus[workflowStatus] === registeringVotersStatus && <VoterManager />}
+        <WorkflowManager />
       </IsConnected>
     </Loader>
   )

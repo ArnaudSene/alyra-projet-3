@@ -47,10 +47,10 @@ npx hardhat node
 cd voting/backend
 
 # If you're in development environment
-npx hardhat run --network localhost scripts/deploy.ts
+npx hardhat run --network localhost scripts/01-deploy.ts
 
 # If you're in test environment (Sepolia)
-npx hardhat run --network sepolia scripts/deploy.ts
+npx hardhat run --network sepolia scripts/01-deploy.ts
 ```
 
 - Modifier votre fichier `.env` dans le dossier `backend` avec vos variables d'environnement local suivant le resaux que vous avez choisie.

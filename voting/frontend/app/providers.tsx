@@ -7,7 +7,7 @@ import { argentWallet, ledgerWallet, trustWallet } from '@rainbow-me/rainbowkit/
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { hardhat, sepolia } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { WorkflowStatusContextProvider } from '@/context/workflowStatus'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -53,6 +53,17 @@ const wagmiConfig = createConfig({
 export function Providers({ children }: { children: React.ReactNode }) {
     const [mounted, setMounted] = React.useState(false);
     React.useEffect(() => setMounted(true), []);
+
+    const theme = extendTheme({
+        colors: {
+            brand: {
+                500: "#6366f1",
+                600: "#4844bb",
+                700: "#312e81"
+            },
+        },
+    })
+
     return (
         <WagmiConfig config={wagmiConfig}>
             <RainbowKitProvider
@@ -61,9 +72,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 theme={darkTheme({
                     borderRadius: 'medium',
                 })}>
-                <ChakraProvider>
+                <ChakraProvider theme={theme}>
                     <WorkflowStatusContextProvider>
-                            {mounted && children}
+                        {mounted && children}
                     </WorkflowStatusContextProvider>
                 </ChakraProvider>
             </RainbowKitProvider>

@@ -20,16 +20,18 @@ export default function Home() {
 
     useEffect(() => {
         setLoading(true)
+        setIsVoter(false)
+        setIsOwner(false)
         if (isConnected) {
             userIsOwner(address as `0x${string}`).then(
                 isOwner => setIsOwner(isOwner)
             ).catch(err => console.log(err))
-            .finally(() =>
-                userIsVoter(address as `0x${string}`).then(
-                    isVoter => setIsVoter(isVoter)
-                ).catch(err => console.log(err))
-                .finally(() => setLoading(false))
-            )
+                .finally(() =>
+                    userIsVoter(address as `0x${string}`).then(
+                        isVoter => setIsVoter(isVoter)
+                    ).catch(err => console.log(err))
+                        .finally(() => setLoading(false))
+                )
         }
     }, [address, isConnected, workflowStatus])
 
@@ -38,11 +40,13 @@ export default function Home() {
             {WorkflowStatus[workflowStatus] === votesTalliedStatus && <WinningProposal />}
 
             <div className="flex flex-col space-y-2 mx-auto max-w-screen-lg">
-                {isVoter && (WorkflowStatus[workflowStatus] !== proposalsRegistrationStartedStatus &&
+
+                {isVoter ? WorkflowStatus[workflowStatus] !== proposalsRegistrationStartedStatus &&
                     WorkflowStatus[workflowStatus] !== votingSessionStartedStatus &&
                     WorkflowStatus[workflowStatus] !== votesTalliedStatus
-                ) ? <h2 className="font-bold text-lg text-center mb-3">No actions available yet for Voters</h2>
+                    ? <h2 className="font-bold text-lg text-center mb-3">No actions available yet for Voters</h2>
                     : <VoterActionMenu />
+                : <h2 className="font-bold text-lg text-center mb-3">You're not registered has voter</h2>
                 }
 
                 {isOwner && <AdminActionMenu />}
