@@ -38,8 +38,8 @@ const Navbar = () => {
 
     return ((isOwner || isVoter) &&
         <nav className="bg-gray-800 text-gray-100 border-gray-500 border-b p-3 text-center">
-            {isOwner && <Link className="p-5 font-semibold hover:text-indigo-500 hover:font-bold" href="/admin">Manage</Link>}
-            {isVoter && <Link className="p-5 font-semibold hover:text-indigo-500 hover:font-bold" href="/voters">Voter Page</Link>}
+            {isOwner && <Link className="p-5 font-semibold hover:text-indigo-500 hover:font-bold" href="/admin">Organizer</Link>}
+            {isVoter && <Link className="p-5 font-semibold hover:text-indigo-500 hover:font-bold" href="/voters">Voter</Link>}
         </nav>
     )
 }
