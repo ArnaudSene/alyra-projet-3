@@ -41,7 +41,7 @@ const SendVote = () => {
                 })
             ).catch(
                 err => {
-                    setHasVoted(true)
+                    setHasVoted(false)
                     toast({
                         title: 'Unknown error',
                         description: err.message,
