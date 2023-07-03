@@ -106,7 +106,7 @@ contract Voting is Ownable {
     }
 
     /**
- * @notice Get the winning proposal by his id
+     * @notice Get the winning proposal by his id
      * Only when workflow status is VotesTallied
      *
      * @return Proposal The Proposal
@@ -114,7 +114,6 @@ contract Voting is Ownable {
     function getWinningProposal() external view returns (Proposal memory) {
         require(workflowStatus == WorkflowStatus.VotesTallied, 'Unavailable with current status!');
         return proposalsArray[winningProposalID];
-
     }
 
     /**

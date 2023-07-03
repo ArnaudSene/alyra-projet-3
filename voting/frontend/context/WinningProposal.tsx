@@ -16,7 +16,7 @@ const WinningProposalContext = createContext<IWinningProposalProps>({
 })
 
 export const WinningProposalContextProvider = ({ children }: { children: ReactNode }) => {
-    const [proposal, setProposal,] = useState<Proposal>({ description: "", voteCount: BigInt(0) })
+    const [proposal, setProposal] = useState<Proposal>({ description: "", voteCount: BigInt(0) })
 
     return (
 
