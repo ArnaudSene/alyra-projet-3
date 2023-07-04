@@ -63,7 +63,7 @@ const IsConnected = ({ children, asOwner, asVoter }: {
                 :
                 <div className="flex flex-col mx-auto w-1/2 rounded h-auto text-center bg-gray-800 text-zinc-200 shadow-lg drop-shadow-lg border-gray-800 border p-5">
                     <Text>
-                        Please connect you're wallet to access at <span className="inline-flex"><AppLogo size="md"/></span>
+                        Please connect you're wallet to access at <span className="inline-flex"><AppLogo textSize='text-md' pbSize='pb-1' pSize='p-1'/></span>
                     </Text>
 
                     <div className="justify-center mx-auto h-auto mt-10">
