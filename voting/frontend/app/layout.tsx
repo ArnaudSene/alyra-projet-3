@@ -20,9 +20,9 @@ function RootLayout({ children }: { children: React.ReactNode }) {
                     <Headers />
                     <Navbar />
                     <main className='container mx-auto pt-10'>
+                        <AppLogo textSize='text-6xl' pbSize='pb-10' pSize='p-4'/>
+                        
                         <IsConnected>
-                            <h1 className='text-center'><AppLogo/></h1>
-
                             <WorkflowStepperManager />
                             {children}
                         </IsConnected>
