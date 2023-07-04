@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.0] (2023-07-04)
+
+### fix: Some minor fixes
+
+- Fix AppLogo size
+- Remove package-lock files
+- Update README file
+
+---
+
 ## [0.19.0] (2023-07-03)
 
 ### feat: Update design
