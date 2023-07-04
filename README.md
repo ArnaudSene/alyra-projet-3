@@ -2,6 +2,7 @@
 ----
 
 [Vidéo de démonstration dApp Voting pour le projet 3](https://youtu.be/FKCMrQD8zCQ)
+[Déploiement Vercel](alyra-projet-3.vercel.app)
 
 dApp réalisée par Alexandre Caliaro et Arnaud Séné 
 
