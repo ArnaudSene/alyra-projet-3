@@ -11,7 +11,7 @@ const Headers = () => {
         <header className="bg-gray-950 text-gray-100 border-gray-500 border-b">
             <nav className="mx-auto flex justify-between text-center p-4">
                 <div className="w-1/3">
-                    <AppLogo size="xl"/>
+                    <AppLogo textSize='text-xl' pbSize='pb-2' pSize='p-2'/>
                 </div>
 
                 <div className="w-1/3"></div>
